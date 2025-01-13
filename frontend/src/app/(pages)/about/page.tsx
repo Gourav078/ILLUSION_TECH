@@ -1,8 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
-
-// import { motion } from "framer-motion";
+import Image from "next/image"; // Import the Image component from next/image
 
 const teamMembers = [
   {
@@ -62,10 +61,12 @@ const page = () => {
                 >
                   <div className="flex flex-col items-center">
                     <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-2 border-cyber-accent">
-                      <img
+                      <Image
                         src={member.avatar}
                         alt={member.name}
                         className="w-full h-full object-cover"
+                        width={128} // Specify width and height
+                        height={128} // Specify width and height
                       />
                     </div>
 

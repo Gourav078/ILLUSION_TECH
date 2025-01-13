@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,18 +6,62 @@ import axios from "axios";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
 
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  organization: string;
+  reason: string;
+}
+
+interface Errors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  organization?: string;
+  reason?: string;
+}
+
 const WorkshopForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
     organization: "",
     reason: "",
   });
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Errors>({});
+
+  const validateForm = (): Errors => {
+    const newErrors: Errors = {};
+
+    if (!formData.name) newErrors.name = "Full Name is required.";
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (!formData.phone) {
+      newErrors.phone = "Phone number is required.";
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid phone number.";
+    }
+    if (!formData.organization)
+      newErrors.organization = "Organization/College is required.";
+    if (!formData.reason) newErrors.reason = "Reason is required.";
+
+    return newErrors;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
 
     if (loading) return;
 
@@ -32,7 +75,10 @@ const WorkshopForm = () => {
       console.log("Workshop form submitted:", response.data);
 
       toast.success(
-        "Registration submitted successfully! We'll contact you soon."
+        "Registration submitted successfully! We'll contact you soon.",
+        {
+          position: "top-right",
+        }
       );
 
       setFormData({
@@ -42,12 +88,15 @@ const WorkshopForm = () => {
         organization: "",
         reason: "",
       });
+      setErrors({});
     } catch (err) {
       console.error("Error submitting workshop form:", err);
 
-      toast.error("Failed to submit the form. Please try again later.");
+      toast.error("Failed to submit the form. Please try again later.", {
+        position: "top-right",
+      });
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -73,6 +122,7 @@ const WorkshopForm = () => {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="border border-cyan-500 focus:ring-cyan-400 rounded-lg text-gray-300 bg-gray-800"
           />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
 
         <div className="space-y-2">
@@ -89,6 +139,9 @@ const WorkshopForm = () => {
             }
             className="border border-purple-500 focus:ring-purple-400 rounded-lg text-gray-300 bg-gray-800"
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -105,6 +158,9 @@ const WorkshopForm = () => {
             }
             className="border border-pink-500 focus:ring-pink-400 rounded-lg text-gray-300 bg-gray-800"
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm">{errors.phone}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -120,6 +176,9 @@ const WorkshopForm = () => {
             }
             className="border border-cyan-500 focus:ring-cyan-400 rounded-lg text-gray-300 bg-gray-800"
           />
+          {errors.organization && (
+            <p className="text-red-500 text-sm">{errors.organization}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -135,6 +194,9 @@ const WorkshopForm = () => {
             }
             className="border border-purple-500 focus:ring-purple-400 rounded-lg text-gray-300 bg-gray-800"
           />
+          {errors.reason && (
+            <p className="text-red-500 text-sm">{errors.reason}</p>
+          )}
         </div>
       </div>
       <Button
