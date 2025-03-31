@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add this to your global CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -55,15 +64,6 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
 
@@ -149,7 +149,6 @@ body {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  /* background: #1f2937; */
   background: transparent;
   animation: rotate 20s linear infinite;
   display: flex;
@@ -157,6 +156,11 @@ body {
   align-items: center;
   overflow: visible;
   cursor: grab;
+  transform-origin: center;
+}
+
+.circle-container.paused {
+  animation-play-state: paused;
 }
 
 .circle-container:active {
@@ -241,31 +245,6 @@ body {
   transform: rotate(316deg) translate(210px) rotate(-316deg);
 }
 
-/* .title-description {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(20px);
-  background: rgba(255, 255, 255, 0.15);
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 1.5rem;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  color: white;
-  font-weight: bold;
-  box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 200px;
-  min-height: 60px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
-    visibility 0.3s;
-} */
-
 /* someting */
 
 .title-description {
@@ -294,25 +273,64 @@ body {
   visibility: visible;
 }
 
-/* Floating Computer */
 .floating-computer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: transparent;
-  padding: 12px 24px;
+  padding: 8px 16px;
   border-radius: 12px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   text-align: center;
-  /* backdrop-filter: blur(10px); */
   color: white;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 580px;
-  min-height: 90px;
+  min-width: 250px;
+  min-height: 60px;
+  max-width: 90vw;
+  max-height: 15vh;
+  width: auto;
+}
+
+@media (max-width: 480px) {
+  .floating-computer {
+    font-size: 1rem;
+    min-width: 200px;
+    min-height: 50px;
+    padding: 6px 12px;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .floating-computer {
+    font-size: 1.1rem;
+    min-width: 320px;
+    min-height: 70px;
+    padding: 8px 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .floating-computer {
+    font-size: 1.5rem;
+    min-width: 500px;
+    min-height: 80px;
+    padding: 12px 24px;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .floating-computer {
+    font-size: 1.5rem;
+    min-width: 500px;
+    min-height: 80px;
+    padding: 12px 24px;
+  }
 }
 
 .expand-button {
@@ -328,7 +346,24 @@ body {
   cursor: pointer;
 }
 
+.register-button {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: cyan;
+  color: black;
+  border: none;
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .expand-button:hover {
+  background: lightblue;
+}
+
+.register-button:hover {
   background: lightblue;
 }
 
@@ -352,6 +387,23 @@ body {
   text-align: center;
   color: cyan;
   font-family: "Courier New", monospace;
+}
+
+/* Modal Window */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    height: auto;
+    padding: 10px;
+  }
 }
 
 .close-button {
@@ -631,4 +683,17 @@ body {
   72% {
     filter: url(#none);
   }
+}
+
+/* TOUR GUIDE*/
+.tg-backdrop {
+  pointer-events: none !important;
+}
+
+/* GEAR MODAL SCROLLAR */
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.custom-scrollbar {
+  scrollbar-width: none;
 }

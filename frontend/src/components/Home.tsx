@@ -1,87 +1,189 @@
-import { motion, AnimatePresence } from "framer-motion";
+// import { motion, AnimatePresence } from "framer-motion";
+// import GlitchText from "./animata/GlitchText";
+// import MatrixRain from "./animata/MatrixRain";
+// import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+// import WorkshopForm from "./WorkshopForm";
+// import { Button } from "./ui/button";
+
+// const Home = () => {
+//   return (
+//     <section
+//       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 md:px-10 lg:px-20 main-font-family"
+//       style={{
+//         backgroundSize: "cover",
+//         backgroundRepeat: "no-repeat",
+//         backgroundPosition: "center",
+//       }}
+//     >
+//       {/* Background Animation */}
+//       <div className="absolute inset-0 z-[-1] blur-sm">
+//         <MatrixRain />
+//       </div>
+
+//       {/* Main Content */}
+//       <AnimatePresence>
+//         <motion.div
+//           initial={{ opacity: 0, y: 15 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           exit={{ opacity: 0, y: 15 }}
+//           transition={{ delay: 0.2 }}
+//           className="relative z-10 top-[2rem] text-center w-full max-w-4xl p-6 sm:p-8 md:p-10 lg:p-12 backdrop-blur-md border border-green-400 shadow-lg rounded-xl"
+//         >
+//           {/* Heading */}
+//           <h1 className="main-font-family font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-cyan-400">
+//             <GlitchText text="ILLUSION SECURITY" />
+//           </h1>
+
+//           {/* Description */}
+//           <p className="mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl text-green-100 max-w-2xl mx-auto leading-relaxed">
+//             Pioneering <GlitchText text="AI" /> and{" "}
+//             <GlitchText text="Cybersecurity" /> Training
+//             <span className="block mt-2 mb-5 main-font-family font-bold text-lg sm:text-xl md:text-2xl lg:text-4xl">
+//               For the Next Generation of <GlitchText text="Elite Hackers" />
+//             </span>
+//           </p>
+
+//           {/* Workshop Button */}
+//           <Dialog>
+//             <DialogTrigger asChild>
+//               <Button className="rounded-full font-bold px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 text-center transition-all duration-300 bg-black text-white hover:scale-110 shadow-lg border-2">
+//                 Register for Workshop
+//               </Button>
+//             </DialogTrigger>
+//             <DialogContent className="bg-transparent border-none max-w-xs sm:max-w-md">
+//               <WorkshopForm />
+//             </DialogContent>
+//           </Dialog>
+//         </motion.div>
+//       </AnimatePresence>
+//     </section>
+//   );
+// };
+
+// export default Home;
+
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import WorkshopForm from "./WorkshopForm";
+// import { Button } from "./ui/button";
 import GlitchText from "./animata/GlitchText";
 import MatrixRain from "./animata/MatrixRain";
 
+const TARGET_TEXT = "Register for Workshop";
+const CYCLES_PER_LETTER = 2;
+const SHUFFLE_TIME = 50;
+const CHARS = "!@#$%^&*():{};|,.<>/?";
+
 const Home = () => {
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [text, setText] = useState(TARGET_TEXT);
+
+  const scramble = () => {
+    let pos = 0;
+
+    intervalRef.current = setInterval(() => {
+      const scrambled = TARGET_TEXT.split("")
+        .map((char, index) => {
+          if (pos / CYCLES_PER_LETTER > index) {
+            return char;
+          }
+
+          const randomCharIndex = Math.floor(Math.random() * CHARS.length);
+          const randomChar = CHARS[randomCharIndex];
+
+          return randomChar;
+        })
+        .join("");
+
+      setText(scrambled);
+      pos++;
+
+      if (pos >= TARGET_TEXT.length * CYCLES_PER_LETTER) {
+        stopScramble();
+      }
+    }, SHUFFLE_TIME);
+  };
+
+  const stopScramble = () => {
+    clearInterval(intervalRef.current || undefined);
+    setText(TARGET_TEXT);
+  };
+
   return (
-    <div
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 main-font-family"
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 md:px-10 lg:px-20 main-font-family"
       style={{
-        // backgroundImage: "url('/main background.png')",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        // filter: "grayscale(100%)",
       }}
     >
-      <MatrixRain />
+      {/* Background Animation */}
+      <div className="absolute inset-0 z-[-1] blur-sm">
+        <MatrixRain />
+      </div>
 
-      {/* Content */}
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 15 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="relative z-10 text-center px-5 max-w-4xl mx-auto">
-            {/* <div
-              className="flex justify-center items-center w-full"
-              style={{
-                maxWidth: "800px",
+      {/* Main Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 15 }}
+        transition={{ delay: 0.2 }}
+        className="relative z-10 top-[2rem] text-center w-full max-w-4xl p-6 sm:p-8 md:p-10 lg:p-12 backdrop-blur-md border border-green-400 shadow-lg"
+      >
+        {/* Heading */}
+        <h1 className="main-font-family font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-cyan-400">
+          <GlitchText text="ILLUSION SECURITY" />
+        </h1>
+
+        {/* Description */}
+        <p className="mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl text-green-100 max-w-2xl mx-auto leading-relaxed">
+          Pioneering <GlitchText text="AI" /> and{" "}
+          <GlitchText text="Cybersecurity" /> Training
+          <span className="block mt-2 mb-5 main-font-family font-bold text-lg sm:text-xl md:text-2xl lg:text-4xl">
+            For the Next Generation of <GlitchText text="Elite Hackers" />
+          </span>
+        </p>
+
+        {/* Workshop Button */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <motion.button
+              whileHover={{
+                scale: 1.025,
               }}
+              whileTap={{
+                scale: 0.975,
+              }}
+              onMouseEnter={scramble}
+              onMouseLeave={stopScramble}
+              className="group relative overflow-hidden font-bold px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 text-center transition-all duration-300 bg-black text-white hover:scale-110 shadow-lg border-2"
             >
-              <svg
-                className="text-[1rem] sm:text-[1rem] md:text-[1.75rem] lg:text-[1.90rem]"
-                style={{
-                  width: "100%",
-                  height: "auto",
+              <div className="relative z-10">{text}</div>
+              <motion.span
+                initial={{
+                  y: "100%",
                 }}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 350 36.22490873858631"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <defs>
-                  <linearGradient id="gradient">
-                    <stop stopColor="#fff" offset="0"></stop>
-                    <stop stopColor="#fff" offset="1"></stop>
-                  </linearGradient>
-                </defs>
-                <g
-                  transform="matrix(1.8046442114700996,0,0,1.8046442114700996,-2.887430566247876,-9.384151276478786)"
-                  fill="url(#gradient)"
-                >
-                  <path d="M5.62 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M2.94 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M17.3 18.86 c0.38 0 0.66 0.3 0.66 0.68 c0 0.36 -0.28 0.66 -0.66 0.66 l-7.78 0 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 12.7 l7.12 0 l0 0 z M11.52 6.16 c0 -0.36 0.3 -0.66 0.66 -0.66 c0.38 0 0.68 0.3 0.68 0.66 l0 10.02 l4.44 0 c0.38 0 0.66 0.3 0.66 0.68 c0 0.36 -0.28 0.66 -0.66 0.66 l-5.12 0 c-0.36 0 -0.66 -0.3 -0.66 -0.66 l0 -10.7 l0 0 z M28.880000000000003 18.86 c0.38 0 0.66 0.3 0.66 0.68 c0 0.36 -0.28 0.66 -0.66 0.66 l-7.78 0 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 12.7 l7.12 0 l0 0 z M23.1 6.16 c0 -0.36 0.3 -0.66 0.66 -0.66 c0.38 0 0.68 0.3 0.68 0.66 l0 10.02 l4.44 0 c0.38 0 0.66 0.3 0.66 0.68 c0 0.36 -0.28 0.66 -0.66 0.66 l-5.12 0 c-0.36 0 -0.66 -0.3 -0.66 -0.66 l0 -10.7 l0 0 z M34.66 14.7 l0 -8.56 c0 -0.38 0.3 -0.68 0.66 -0.68 c0.38 0 0.68 0.3 0.68 0.68 l0 8.56 c0 2.12 3.1 2.12 3.1 0 l0 -8.56 c0 -0.38 0.28 -0.68 0.68 -0.68 c0.36 0 0.66 0.3 0.66 0.68 l0 8.56 c0 3.9 -5.78 3.9 -5.78 0 l0 0 z M43.16 14.86 c0 7.34 -11.24 7.32 -11.24 0 l0 -8.72 c0 -0.38 0.3 -0.68 0.66 -0.68 c0.38 0 0.68 0.3 0.68 0.68 l0 8.72 c0 5.6 8.58 5.6 8.58 0 l0 -8.72 c0 -0.38 0.28 -0.68 0.66 -0.68 c0.36 0 0.66 0.3 0.66 0.68 l0 8.72 l0 0 z M53.82 6.02 c0.82 0.28 0.38 1.56 -0.46 1.26 c-1.8 -0.64 -3.96 -0.98 -5.28 0.48 c-1.08 1.14 -1.36 3.24 0.08 4.48 c1.74 1.56 4.22 1.22 4.36 3.34 c0.06 1.12 -0.92 1.94 -2 2.02 c-1.3 0.08 -2.92 -0.24 -4.24 -1.2 c-0.7 -0.5 0.08 -1.58 0.78 -1.08 c1.54 1.12 4.24 1.32 4.12 0.32 c-0.08 -0.94 -2.06 -0.78 -3.92 -2.4 c-2.9 -2.54 -1.14 -7.6 2.98 -7.8 c1.2 -0.06 2.18 0.1 3.58 0.58 l0 0 z M46.019999999999996 19.24 c-0.76 -0.4 -0.14 -1.58 0.64 -1.18 c3.08 1.64 7.26 1.22 7.26 -2.48 c0 -2.74 -3.6 -3.24 -4.62 -4.06 c-1.6 -1.26 -0.76 -4.8 4.22 -2.78 c0.78 0.32 0.3 1.56 -0.52 1.22 c-3.02 -1.22 -3.54 0.02 -2.88 0.54 c0.74 0.56 5.12 1.36 5.12 5.08 c0 3.66 -3.24 5.38 -6.98 4.48 c-0.68 -0.14 -1.46 -0.4 -2.24 -0.82 l0 0 z M50.4 16.28 l0 0 l0 0 z M61.66 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M58.98 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M79.38 10.54 c0.1 0.36 -0.08 0.74 -0.44 0.84 c-0.36 0.12 -0.76 -0.08 -0.86 -0.44 c-0.42 -1.28 -1.22 -2.38 -2.32 -3.18 c-1.04 -0.74 -2.34 -1.2 -3.76 -1.2 c-8.34 0 -8.34 12.52 0 12.52 c1.42 0 2.72 -0.44 3.76 -1.2 c1.1 -0.78 1.9 -1.88 2.32 -3.18 c0.1 -0.36 0.5 -0.54 0.86 -0.44 s0.54 0.5 0.44 0.86 c-0.5 1.56 -1.5 2.92 -2.8 3.86 c-1.3 0.92 -2.86 1.48 -4.58 1.48 c-10.14 0 -10.14 -15.26 0 -15.26 c1.72 0 3.28 0.54 4.58 1.46 c1.3 0.96 2.3 2.3 2.8 3.88 l0 0 z M67.88 15.24 c-0.2 -0.34 -0.08 -0.72 0.24 -0.92 c0.34 -0.18 0.74 -0.08 0.92 0.26 c0.32 0.52 0.76 0.98 1.28 1.26 c0.48 0.3 1.06 0.48 1.68 0.48 c0.96 0 1.82 -0.38 2.42 -1.02 c0.64 -0.62 1.02 -1.5 1.02 -2.48 c0 -0.96 -0.38 -1.84 -1.02 -2.46 c-0.6 -0.62 -1.46 -1.02 -2.42 -1.02 c-0.62 0 -1.18 0.16 -1.68 0.46 c-0.52 0.3 -0.96 0.74 -1.28 1.26 c-0.18 0.34 -0.58 0.46 -0.92 0.28 c-0.32 -0.18 -0.44 -0.6 -0.24 -0.94 c0.42 -0.74 1.02 -1.36 1.74 -1.78 s1.54 -0.64 2.38 -0.64 c1.34 0 2.54 0.54 3.42 1.42 c0.84 0.88 1.38 2.08 1.38 3.42 s-0.54 2.54 -1.38 3.42 c-0.88 0.9 -2.08 1.44 -3.42 1.44 c-0.84 0 -1.66 -0.24 -2.38 -0.64 c-0.72 -0.44 -1.32 -1.06 -1.74 -1.8 l0 0 z M83.42 19.54 c0 0.36 -0.28 0.68 -0.66 0.68 c-0.36 0 -0.66 -0.32 -0.66 -0.68 l0 -13.38 c0 -0.36 0.3 -0.64 0.66 -0.64 c0.38 0 0.66 0.28 0.66 0.64 l0 13.38 l0 0 z M94.34 19.54 c0 0.36 -0.3 0.68 -0.68 0.68 c-0.36 0 -0.66 -0.32 -0.66 -0.68 l0 -13.38 c0 -0.36 0.3 -0.64 0.66 -0.64 c0.38 0 0.68 0.28 0.68 0.64 l0 13.38 l0 0 z M91.8 19.16 c0.2 0.3 0.12 0.7 -0.16 0.94 c-0.32 0.2 -0.72 0.12 -0.94 -0.18 l-4.6 -6.58 l0 6.2 c0 0.36 -0.3 0.66 -0.68 0.66 c-0.36 0 -0.64 -0.3 -0.64 -0.66 l0 -8.32 c0 -0.22 0.08 -0.42 0.28 -0.54 c0.28 -0.24 0.72 -0.16 0.92 0.16 l5.82 8.32 l0 0 z M84.64 6.5600000000000005 c-0.22 -0.32 -0.14 -0.72 0.16 -0.92 c0.3 -0.24 0.72 -0.14 0.92 0.16 l4.6 6.58 l0 -6.22 c0 -0.36 0.32 -0.64 0.68 -0.64 s0.66 0.28 0.66 0.64 l0 8.32 c0 0.22 -0.1 0.44 -0.3 0.56 c-0.3 0.22 -0.7 0.14 -0.92 -0.16 l-5.8 -8.32 l0 0 z M110.74000000000001 6.02 c0.82 0.28 0.38 1.56 -0.46 1.26 c-1.8 -0.64 -3.96 -0.98 -5.28 0.48 c-1.08 1.14 -1.36 3.24 0.08 4.48 c1.74 1.56 4.22 1.22 4.36 3.34 c0.06 1.12 -0.92 1.94 -2 2.02 c-1.3 0.08 -2.92 -0.24 -4.24 -1.2 c-0.7 -0.5 0.08 -1.58 0.78 -1.08 c1.54 1.12 4.24 1.32 4.12 0.32 c-0.08 -0.94 -2.06 -0.78 -3.92 -2.4 c-2.9 -2.54 -1.14 -7.6 2.98 -7.8 c1.2 -0.06 2.18 0.1 3.58 0.58 l0 0 z M102.94000000000001 19.24 c-0.76 -0.4 -0.14 -1.58 0.64 -1.18 c3.08 1.64 7.26 1.22 7.26 -2.48 c0 -2.74 -3.6 -3.24 -4.62 -4.06 c-1.6 -1.26 -0.76 -4.8 4.22 -2.78 c0.78 0.32 0.3 1.56 -0.52 1.22 c-3.02 -1.22 -3.54 0.02 -2.88 0.54 c0.74 0.56 5.12 1.36 5.12 5.08 c0 3.66 -3.24 5.38 -6.98 4.48 c-0.68 -0.14 -1.46 -0.4 -2.24 -0.82 l0 0 z M107.32000000000002 16.28 l0 0 l0 0 z M122.14000000000001 8.18 c0.38 0 0.68 0.28 0.68 0.66 c0 0.36 -0.3 0.66 -0.68 0.66 l-3.58 0 l0 1.34 l2.34 0 c0.38 0 0.68 0.3 0.68 0.68 c0 0.36 -0.3 0.66 -0.68 0.66 l-3 0 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -2.68 c0 -0.38 0.3 -0.66 0.68 -0.66 l4.24 0 l0 0 z M120.9 13.52 c0.38 0 0.68 0.3 0.68 0.66 c0 0.38 -0.3 0.68 -0.68 0.68 l-2.34 0 l0 1.32 l3.58 0 c0.38 0 0.68 0.3 0.68 0.68 c0 0.36 -0.3 0.66 -0.68 0.66 l-4.24 0 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -2.68 c0 -0.36 0.3 -0.66 0.68 -0.66 l3 0 l0 0 z M122.14000000000001 18.86 c0.38 0 0.68 0.3 0.68 0.68 c0 0.36 -0.3 0.66 -0.68 0.66 l-6.92 0 c-0.36 0 -0.66 -0.3 -0.66 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.66 -0.66 l6.92 0 c0.38 0 0.68 0.3 0.68 0.66 c0 0.38 -0.3 0.68 -0.68 0.68 l-6.24 0 l0 12.02 l6.24 0 l0 0 z M135.34 5.800000000000001 c0.8 0.34 0.3 1.56 -0.52 1.24 c-0.8 -0.34 -1.64 -0.5 -2.5 -0.5 c-3.6 0 -6.16 2.72 -6.16 6.24 c0.02 3.14 2.12 6.2 6.22 6.2 c0.86 0 1.66 -0.18 2.44 -0.48 c0.82 -0.34 1.32 0.9 0.52 1.22 c-0.94 0.38 -1.94 0.58 -2.96 0.58 c-4.98 0 -7.5 -3.74 -7.52 -7.48 c-0.02 -3.8 2.48 -7.6 7.52 -7.6 c1.02 0 2.02 0.2 2.96 0.58 l0 0 z M134.42000000000002 15.719999999999999 c0.76 -0.4 1.4 0.74 0.62 1.16 c-0.86 0.5 -1.8 0.72 -2.72 0.7 c-2.44 -0.04 -4.6 -1.84 -4.6 -4.8 c0 -4.12 4.08 -5.94 7.32 -4.12 c0.78 0.4 0.14 1.58 -0.62 1.14 c-2.32 -1.28 -5.38 -0.14 -5.38 2.98 c0 2.2 1.54 3.4 3.26 3.46 c0.7 0.02 1.44 -0.14 2.12 -0.52 l0 0 z M140.7 14.7 l0 -8.56 c0 -0.38 0.3 -0.68 0.66 -0.68 c0.38 0 0.68 0.3 0.68 0.68 l0 8.56 c0 2.12 3.1 2.12 3.1 0 l0 -8.56 c0 -0.38 0.28 -0.68 0.68 -0.68 c0.36 0 0.66 0.3 0.66 0.68 l0 8.56 c0 3.9 -5.78 3.9 -5.78 0 l0 0 z M149.2 14.86 c0 7.34 -11.24 7.32 -11.24 0 l0 -8.72 c0 -0.38 0.3 -0.68 0.66 -0.68 c0.38 0 0.68 0.3 0.68 0.68 l0 8.72 c0 5.6 8.58 5.6 8.58 0 l0 -8.72 c0 -0.38 0.28 -0.68 0.66 -0.68 c0.36 0 0.66 0.3 0.66 0.68 l0 8.72 l0 0 z M158.07999999999998 12.18 c-0.18 0 -0.44 0.02 -0.66 0 c-1.04 -0.06 -1.08 -1.32 0 -1.32 c0.62 0 1.36 0.1 1.36 -0.68 c0 -0.4 -0.32 -0.68 -0.7 -0.68 l-2.38 0 c-0.88 0 -0.88 -1.34 0 -1.34 l2.38 0 c1.22 0 2.02 1.02 2.02 2.04 c0 1.12 -0.92 1.98 -2.02 1.98 l0 0 z M159.32 19.14 c0.5 0.72 -0.58 1.5 -1.1 0.78 l-1.84 -2.66 l0 2.28 c0 0.88 -1.34 0.88 -1.34 0 l0 -4.36 c0 -0.72 0.84 -0.92 1.22 -0.42 l3.06 4.38 l0 0 z M153.7 19.54 c0 0.88 -1.34 0.88 -1.34 0 l0 -13.38 c0 -0.36 0.32 -0.66 0.68 -0.66 l5.26 0 c4.1 0 6.16 5.02 3.28 7.98 c-0.58 0.58 -1.3 1.02 -2.1 1.22 l3.1 4.44 c0.5 0.72 -0.6 1.5 -1.08 0.78 l-3.7 -5.3 c-0.4 -0.52 0 -1.1 0.5 -1.1 c2.94 0 4.38 -3.64 2.32 -5.72 c-0.6 -0.6 -1.42 -0.96 -2.32 -0.96 l-4.6 0 l0 12.7 l0 0 z M168.85999999999999 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M166.17999999999998 19.54 c0 0.36 -0.3 0.66 -0.66 0.66 c-0.38 0 -0.68 -0.3 -0.68 -0.66 l0 -13.38 c0 -0.36 0.3 -0.66 0.68 -0.66 c0.36 0 0.66 0.3 0.66 0.66 l0 13.38 l0 0 z M180.89999999999998 8.18 c0.36 0 0.64 0.3 0.64 0.68 c0 0.36 -0.28 0.64 -0.64 0.64 l-2.68 0 l0 10.02 c0 0.38 -0.3 0.68 -0.68 0.68 c-0.36 0 -0.66 -0.3 -0.66 -0.68 l0 -10.66 c0 -0.38 0.3 -0.68 0.66 -0.68 l3.36 0 l0 0 z M171.56 6.84 c-0.38 0 -0.68 -0.3 -0.68 -0.66 c0 -0.38 0.3 -0.66 0.68 -0.66 l9.34 0 c0.36 0 0.64 0.28 0.64 0.66 c0 0.36 -0.28 0.66 -0.64 0.66 l-9.34 0 l0 0 z M171.56 9.5 c-0.38 0 -0.68 -0.28 -0.68 -0.64 c0 -0.38 0.3 -0.68 0.68 -0.68 l3.32 0 c0.38 0 0.68 0.3 0.68 0.68 l0 10.66 c0 0.38 -0.3 0.68 -0.68 0.68 c-0.36 0 -0.68 -0.3 -0.68 -0.68 l0 -10.02 l-2.64 0 l0 0 z M188.28 10.82 l-2.7 -4.54 c-0.2 -0.34 -0.1 -0.74 0.24 -0.92 c0.3 -0.2 0.72 -0.1 0.9 0.22 l2.16 3.66 l2.16 -3.66 c0.2 -0.32 0.62 -0.42 0.92 -0.22 c0.32 0.18 0.42 0.58 0.24 0.92 l-2.72 4.56 c-0.3 0.52 -0.9 0.48 -1.2 -0.02 l0 0 z M194.32 5.58 c0.2 -0.34 0.6 -0.42 0.92 -0.22 c0.3 0.2 0.4 0.6 0.2 0.92 l-4.54 7.3 l0 6.16 c0 0.38 -0.32 0.68 -0.68 0.68 s-0.68 -0.3 -0.68 -0.68 l0 -6.32 c0 -0.12 0.04 -0.26 0.1 -0.38 l4.68 -7.46 l0 0 z M188.22 19.74 c0 0.38 -0.3 0.68 -0.66 0.68 c-0.38 0 -0.68 -0.3 -0.68 -0.68 l0 -6.16 l-4.56 -7.3 c-0.18 -0.32 -0.1 -0.72 0.22 -0.92 c0.3 -0.2 0.72 -0.12 0.92 0.22 l4.64 7.42 c0.08 0.14 0.12 0.26 0.12 0.4 l0 6.34 l0 0 z"></path>
-                </g>
-              </svg>
-            </div> */}
-
-            <h1 className="main-font-family font-bold text-[2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] text-green-100">
-              <GlitchText text="ILLUSION SECURITY" />
-            </h1>
-
-            <p className="mt-6 text-[1rem] sm:text-lg md:text-xl lg:text-2xl main-font-family max-w-2xl mx-auto leading-relaxed text-green-100">
-              Pioneering <GlitchText text="AI" /> and{" "}
-              <GlitchText text="Cybersecurity" /> Training
-              <span className="block mt-2 main-font-family font-bold  text-[1rem] sm:text-[1rem] md:text-[1.75rem] lg:text-[2rem]">
-                For the Next Generation of <GlitchText text="Elite Hackers" />
-              </span>
-            </p>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-      {/* Subtle animated scan line */}
-      {/* <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-cyber-accent/10 to-transparent animate-scan-line pointer-events-none"
-        style={{
-          backgroundSize: "100% 3px",
-        }}
-      /> */}
-
-      {/* Decorative corner elements */}
-      {/* <div className="absolute top-0 left-0 w-24 h-24 border-l-4 border-t-4 border-cyber-primary opacity-50 animate-glow" />
-      <div className="absolute bottom-0 right-0 w-24 h-24 border-r-4 border-b-4 border-cyber-primary opacity-50 animate-glow" /> */}
-    </div>
+                animate={{
+                  y: "-100%",
+                }}
+                transition={{
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  duration: 1,
+                  ease: "linear",
+                }}
+                className="absolute inset-0 z-0 scale-125 bg-gradient-to-t from-indigo-400/0 from-40% via-indigo-400/100 to-indigo-400/0 to-60% opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </motion.button>
+          </DialogTrigger>
+          <DialogContent className="bg-transparent border-none max-w-xs sm:max-w-md">
+            <WorkshopForm />
+          </DialogContent>
+        </Dialog>
+      </motion.div>
+    </section>
   );
 };
 

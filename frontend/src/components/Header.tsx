@@ -2,30 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import { ModeToggle } from "./mode-toggel";
-// import Image from "next/image";
 
 const Header = () => {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
 
-  // backdrop-blur-md
-
   return (
     <>
       {/* Top Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparant border-b border-cyber-accent/20 shadow-lg main-font-family backdrop-blur-md">
-        <div className="max-w-6xl mx-auto py-4 px-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-extrabold text-green-400">
-            illusionsecurity.ai
-            {/* <Image
-              className="w-32 sm:w-40 md:w-48"
-              width={100}
-              height={10}
-              src="/logo-no-background.png"
-              alt="logo"
-            /> */}
+        <div className="logo max-w-6xl mx-auto py-4 px-4 flex items-center justify-between">
+          <Link
+            href="/"
+            className="w-auto h-auto text-[1.1rem] font-extrabold text-green-400"
+          >
+            ILLUSIONSECURITY.AI
           </Link>
 
           <div className="hidden lg:flex items-center gap-12">
@@ -59,12 +51,7 @@ const Header = () => {
             >
               Contact
             </Link>
-            {/* <ModeToggle /> */}
           </div>
-
-          {/* <div className="lg:hidden">
-            <ModeToggle />
-          </div> */}
         </div>
       </nav>
 

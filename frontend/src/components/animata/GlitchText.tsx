@@ -8,19 +8,22 @@ interface GlitchProps {
   glitchDuration?: number;
   letterChangeInterval?: number;
   pauseBetweenGlitches?: number;
+  glitchDelay?: number;
 }
 
 const GlitchText: React.FC<GlitchProps> = ({
   text,
   glitchDuration = 2000,
-  letterChangeInterval = 75,
-  pauseBetweenGlitches = 2500,
+  letterChangeInterval = 150,
+  pauseBetweenGlitches = 10000,
+  glitchDelay = 10000,
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const [glitching, setGlitching] = useState(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
+    let glitchTimeout: NodeJS.Timeout;
 
     const startGlitch = () => {
       setGlitching(true);
@@ -31,14 +34,14 @@ const GlitchText: React.FC<GlitchProps> = ({
           setDisplayText(text); // Restore original text
           setGlitching(false);
           clearInterval(interval);
-          setTimeout(startGlitch, pauseBetweenGlitches); // Wait before next glitch
+          glitchTimeout = setTimeout(startGlitch, pauseBetweenGlitches); // Wait before next glitch
           return;
         }
 
         setDisplayText((prev) => {
           const arr = prev.split("");
           const randomIndices = Array.from(
-            { length: Math.min(3, arr.length) },
+            { length: Math.min(2, arr.length) },
             () => Math.floor(Math.random() * arr.length)
           );
           randomIndices.forEach((i) => {
@@ -50,15 +53,24 @@ const GlitchText: React.FC<GlitchProps> = ({
       }, letterChangeInterval);
     };
 
-    startGlitch();
-    return () => clearInterval(interval);
-  }, [text, glitchDuration, letterChangeInterval, pauseBetweenGlitches]);
+    glitchTimeout = setTimeout(startGlitch, glitchDelay);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(glitchTimeout);
+    };
+  }, [
+    text,
+    glitchDuration,
+    letterChangeInterval,
+    pauseBetweenGlitches,
+    glitchDelay,
+  ]);
 
   return (
     <motion.span
       initial={{ opacity: 0.8 }}
       animate={{ opacity: glitching ? 1 : 0.8 }}
-      transition={{ duration: 0.1, repeat: Infinity, repeatType: "reverse" }}
+      transition={{ duration: 0.2, repeat: Infinity, repeatType: "reverse" }}
       className="glitch-text"
     >
       {displayText}
