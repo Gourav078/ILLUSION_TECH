@@ -1,8 +1,154 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+// import {
+//   Brain,
+//   Lightbulb,
+//   Rocket,
+//   Sparkles,
+//   TrendingUp,
+//   Users,
+//   Wrench,
+// } from "lucide-react";
+// import { useEffect, useState, useRef } from "react";
+// // import WorkshopForm from "./WorkshopForm";
+// // import { Button } from "./ui/button";
+// import { motion } from "framer-motion";
+
+// const features = [
+//   {
+//     icon: Users,
+//     title: "1-1 Discussion",
+//     description: "Personalized mentoring sessions with industry experts",
+//   },
+//   {
+//     icon: Brain,
+//     title: "Latest Technology",
+//     description: "Hands-on experience with cutting-edge AI and security tools",
+//   },
+//   {
+//     icon: TrendingUp,
+//     title: "Market Growth",
+//     description: "Insights into rapidly expanding cybersecurity and AI sectors",
+//   },
+//   {
+//     icon: Rocket,
+//     title: "Career Path",
+//     description: "Guidance for building a successful career in tech",
+//   },
+//   {
+//     icon: Wrench,
+//     title: "Industry Tools",
+//     description: "Training on professional-grade security and AI platforms",
+//   },
+//   {
+//     icon: Lightbulb,
+//     title: "Future Scope",
+//     description: "Exploration of emerging technologies and opportunities",
+//   },
+//   {
+//     icon: Sparkles,
+//     title: "Increasing Curiosity",
+//     description: "Engaging projects that spark innovation and learning",
+//   },
+// ];
+
+// const WorkshopOverview = () => {
+//   const [isVisible, setIsVisible] = useState(false);
+//   const ref = useRef<HTMLDivElement>(null);
+
+//   useEffect(() => {
+//     const observer = new IntersectionObserver(
+//       ([entry]) => {
+//         setIsVisible(entry.isIntersecting);
+//       },
+//       { threshold: 0.4 } //for small screen size reduce it to 1
+//     );
+
+//     if (ref.current) {
+//       observer.observe(ref.current);
+//     }
+
+//     return () => {
+//       if (ref.current) {
+//         observer.unobserve(ref.current);
+//       }
+//     };
+//   }, []);
+
+//   return (
+//     <section
+//       ref={ref} // Attach the observer to the section element
+//       className="relative py-20 px-4 bg-cyber-dark text-white"
+//       style={{
+//         backgroundImage: "url('/ov2.jpg')",
+//         backgroundSize: "cover",
+//         backgroundRepeat: "no-repeat",
+//         backgroundPosition: "center",
+//       }}
+//     >
+//       <div className="relative z-10 max-w-6xl mx-auto space-y-20">
+//         <div className="text-center space-y-12">
+//           <motion.h2
+//             className="text-4xl font-extrabold bg-white bg-clip-text text-transparent"
+//             initial={{ opacity: 0, y: 15 }}
+//             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+//             transition={{ duration: 0.5 }}
+//           >
+//             Workshop Overview
+//           </motion.h2>
+
+//           <motion.div
+//             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+//             initial={{ opacity: 0, y: 15 }}
+//             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+//             transition={{ duration: 0.5, staggerChildren: 0.2 }}
+//           >
+//             {features.map((feature, index) => (
+//               <div
+//                 key={index}
+//                 className="p-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 border-2 bg-black/100 dark:border-gray-700 shadow-[0px_0px_15px_rgba(0,0,0,0.09)] relative overflow-hidden"
+//                 style={{
+//                   borderImageSource:
+//                     "linear-gradient(to right, #00ffcc, #0077ff)",
+//                   borderImageSlice: 1,
+//                   boxShadow: "0px 0px 15px rgba(0, 255, 204, 0.3)",
+//                 }}
+//               >
+//                 <feature.icon className="w-8 h-8 text-cyan-400 mb-4" />
+//                 <h3 className="text-xl font-bold  text-white mb-2">
+//                   {feature.title}
+//                 </h3>
+//                 <p className="text-gray-400">{feature.description}</p>
+//               </div>
+//             ))}
+//           </motion.div>
+
+//           {/* <Dialog>
+//             <DialogTrigger asChild>
+//               <Button
+//                 className={`relative rounded-full font-bold px-6 py-3 mt-8 text-center transition-all duration-300
+//               bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white
+//               dark:from-purple-500 dark:via-cyan-500 dark:to-blue-400
+//               hover:scale-105 shadow-md`}
+//                 style={{
+//                   border: "4px solid",
+//                   borderImageSlice: 1,
+//                   borderWidth: "4px",
+//                 }}
+//               >
+//                 <span className="relative">Register for Workshop</span>
+//               </Button>
+//             </DialogTrigger>
+//             <DialogContent className="bg-transparent border-none sm:max-w-[425px]">
+//               <WorkshopForm />
+//             </DialogContent>
+//           </Dialog> */}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default WorkshopOverview;
+
 import {
   Brain,
   Lightbulb,
@@ -12,192 +158,110 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
-import { useState } from "react";
-import WorkshopForm from "./WorkshopForm";
-import { Button } from "./ui/button";
+import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 
 const features = [
   {
     icon: Users,
     title: "1-1 Discussion",
     description: "Personalized mentoring sessions with industry experts",
+    size: "col-span-1 row-span-1  lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1",
   },
   {
     icon: Brain,
     title: "Latest Technology",
     description: "Hands-on experience with cutting-edge AI and security tools",
+    size: "col-span-2 row-span-1  lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1",
   },
   {
     icon: TrendingUp,
     title: "Market Growth",
     description: "Insights into rapidly expanding cybersecurity and AI sectors",
+    size: "col-span-2 row-span-1  lg:col-span-1 lg:row-span-2 md:col-span-1 md:row-span-1",
   },
   {
     icon: Rocket,
     title: "Career Path",
     description: "Guidance for building a successful career in tech",
+    size: "col-span-1 row-span-1  lg:col-span-1 lg:row-span-2 md:col-span-1 md:row-span-1",
   },
   {
     icon: Wrench,
     title: "Industry Tools",
     description: "Training on professional-grade security and AI platforms",
+    size: "col-span-1 row-span-1",
   },
   {
     icon: Lightbulb,
     title: "Future Scope",
     description: "Exploration of emerging technologies and opportunities",
+    size: "col-span-2 row-span-1 lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1",
   },
   {
     icon: Sparkles,
     title: "Increasing Curiosity",
     description: "Engaging projects that spark innovation and learning",
-  },
-];
-
-const upcomingWorkshops = [
-  {
-    id: 1,
-    title: "AI Security Fundamentals",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q2 2024",
-  },
-  {
-    id: 2,
-    title: "Advanced Penetration Testing",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q2 2024",
-  },
-  {
-    id: 3,
-    title: "Machine Learning for Security",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q3 2024",
-  },
-];
-
-const upcomingTrainings = [
-  {
-    id: 1,
-    title: "Ethical Hacking Bootcamp",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q2 2024",
-  },
-  {
-    id: 2,
-    title: "AI Development Intensive",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q3 2024",
-  },
-  {
-    id: 3,
-    title: "Security Operations Center Training",
-    mode: "Coming Soon",
-    price: "TBA",
-    duration: "TBA",
-    date: "Q3 2024",
+    size: "col-span-2 row-span-1  lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1",
   },
 ];
 
 const WorkshopOverview = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="relative py-20 px-4 bg-cyber-dark text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),rgba(0,0,0,0.5))] opacity-60" />
+    <section
+      ref={ref}
+      className="relative py-20 px-6 bg-gray-900 text-white"
+      style={{
+        backgroundImage: "url('/ov2.jpg')",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="max-w-6xl mx-auto space-y-12">
+        <motion.h2
+          className="text-4xl font-bold text-center bg-clip-text text-transparent bg-white"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+        >
+          Workshop Overview
+        </motion.h2>
 
-      <div className="relative z-10 max-w-6xl mx-auto space-y-20">
-        {/* Workshop Features */}
-        <div className="text-center space-y-12">
-          <h2 className="text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Workshop Overview
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="p-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <feature.icon className="w-8 h-8 text-cyan-400 mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-cyan-500 hover:bg-cyan-400 text-white px-6 py-3 font-semibold rounded-md transition-colors mt-8">
-                Register for Workshop
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] bg-gray-900 border border-cyan-500 rounded-md shadow-lg">
-              <WorkshopForm />
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        {/* Upcoming Workshops */}
-        <div className="space-y-8">
-          <h3 className="text-3xl font-bold text-center text-cyan-400">
-            Upcoming Workshops
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {upcomingWorkshops.map((workshop) => (
-              <div
-                key={workshop.id}
-                className="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-lg"
-              >
-                <h4 className="text-xl font-bold text-cyan-400 mb-4">
-                  {workshop.title}
-                </h4>
-                <div className="space-y-2 text-gray-300">
-                  <p>Mode: {workshop.mode}</p>
-                  <p>Price: {workshop.price}</p>
-                  <p>Duration: {workshop.duration}</p>
-                  <p>Expected Date: {workshop.date}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Upcoming Trainings */}
-        <div className="space-y-8">
-          <h3 className="text-3xl font-bold text-center text-cyan-400">
-            Upcoming Trainings
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {upcomingTrainings.map((training) => (
-              <div
-                key={training.id}
-                className="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-lg"
-              >
-                <h4 className="text-xl font-bold text-cyan-400 mb-4">
-                  {training.title}
-                </h4>
-                <div className="space-y-2 text-gray-300">
-                  <p>Mode: {training.mode}</p>
-                  <p>Price: {training.price}</p>
-                  <p>Duration: {training.duration}</p>
-                  <p>Expected Date: {training.date}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <motion.div
+          className="grid grid-cols-3 auto-rows-[150px] gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, staggerChildren: 0.2 }}
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className={`p-6 rounded-xl shadow-md bg-black/100 border border-gray-700 hover:scale-105 transition-transform duration-300 flex flex-col justify-center items-center text-center ${feature.size}`}
+              style={{ boxShadow: "0px 0px 5px" }}
+            >
+              <feature.icon className="w-10 h-10 text-cyan-400 mb-3" />
+              <h3 className="text-[8px] md:text-[1rem] lg:text-[16px] lg:font-semibold">
+                {feature.title}
+              </h3>
+              <p className="text-gray-400 text-[6px] md:text-[1rem] lg:text-[12px] lg:font-semibold">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

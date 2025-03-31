@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-// import { ThemeProvider } from "next-themes";
 import Header from "@/components/Header";
-// import Transition from "@/components/Transition";
 import Footer from "@/components/Footer";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Header />
-        
+        <NextTopLoader color="linear-gradient(to right, rgb(251, 113, 133), rgb(217, 70, 239), rgb(99, 102, 241))" />
         {children}
-        
-        
         <Footer />
       </body>
     </html>

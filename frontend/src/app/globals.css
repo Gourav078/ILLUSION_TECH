@@ -2,58 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 199.4 88.7% 48.4%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 327.4 73.6% 60.2%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 199.4 88.7% 48.4%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 327.4 73.6% 60.2%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+/* Add this to your global CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
-  body {
-    @apply bg-background text-foreground;
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -71,6 +81,10 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+body {
+  background-color: black;
 }
 
 .logo {
@@ -91,4 +105,595 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* SPLASH SCREEN */
+@keyframes zoom-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(2);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}
+
+.animate-zoom {
+  animation: zoom-in 1s ease-in-out forwards;
+}
+
+.animate-fade-out {
+  animation: fade-out 1s ease-in-out forwards;
+}
+
+/* FLoating Component */
+.floating-svg {
+  overflow: visible;
+  width: 200px;
+  height: 50vh;
+}
+
+/* GEAR PAGE */
+.circle-container {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: transparent;
+  animation: rotate 20s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  cursor: grab;
+  transform-origin: center;
+}
+
+.circle-container.paused {
+  animation-play-state: paused;
+}
+
+.circle-container:active {
+  cursor: grabbing;
+}
+
+.single-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-container:hover {
+  animation-play-state: paused;
+}
+
+.group:hover .circle-container {
+  animation-play-state: paused;
+}
+
+.center-icon {
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #374151; */
+  border-radius: 50%;
+  font-size: 2.5rem;
+  color: white;
+  z-index: 10;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.icon-container {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #cccccc; */
+  border: 1px solid #374151;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.5);
+}
+
+.icon-container:hover {
+  transform: translateY(-20px);
+  box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.5);
+  z-index: 11;
+}
+
+.circle-container .icon-container:nth-child(1) {
+  transform: rotate(1deg) translate(210px) rotate(1deg);
+}
+.circle-container .icon-container:nth-child(2) {
+  transform: rotate(45deg) translate(210px) rotate(-45deg);
+}
+.circle-container .icon-container:nth-child(3) {
+  transform: rotate(87deg) translate(210px) rotate(-87deg);
+}
+.circle-container .icon-container:nth-child(4) {
+  transform: rotate(132deg) translate(210px) rotate(-132deg);
+}
+.circle-container .icon-container:nth-child(5) {
+  transform: rotate(178deg) translate(210px) rotate(-178deg);
+}
+.circle-container .icon-container:nth-child(6) {
+  transform: rotate(225deg) translate(210px) rotate(-225deg);
+}
+.circle-container .icon-container:nth-child(7) {
+  transform: rotate(272deg) translate(210px) rotate(-272deg);
+}
+.circle-container .icon-container:nth-child(8) {
+  transform: rotate(316deg) translate(210px) rotate(-316deg);
+}
+
+/* someting */
+
+.title-description {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: cyan;
+  font-size: 1.2rem;
+  font-weight: bold;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.title-description.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.floating-computer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 250px;
+  min-height: 60px;
+  max-width: 90vw;
+  max-height: 15vh;
+  width: auto;
+}
+
+@media (max-width: 480px) {
+  .floating-computer {
+    font-size: 1rem;
+    min-width: 200px;
+    min-height: 50px;
+    padding: 6px 12px;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .floating-computer {
+    font-size: 1.1rem;
+    min-width: 320px;
+    min-height: 70px;
+    padding: 8px 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .floating-computer {
+    font-size: 1.5rem;
+    min-width: 500px;
+    min-height: 80px;
+    padding: 12px 24px;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .floating-computer {
+    font-size: 1.5rem;
+    min-width: 500px;
+    min-height: 80px;
+    padding: 12px 24px;
+  }
+}
+
+.expand-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: cyan;
+  color: black;
+  border: none;
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: cyan;
+  color: black;
+  border: none;
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.expand-button:hover {
+  background: lightblue;
+}
+
+.register-button:hover {
+  background: lightblue;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: black;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: cyan;
+  font-family: "Courier New", monospace;
+}
+
+/* Modal Window */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    height: auto;
+    padding: 10px;
+  }
+}
+
+.close-button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.screen-text {
+  /* font-size: 15px; */
+  font-size: calc(2px + 0.8vw);
+  font-family: "Courier New", monospace;
+  fill: rgba(0, 255, 170, 0.9);
+  /* fill: black; */
+  text-anchor: middle;
+  dominant-baseline: middle;
+  /* filter: blur(0.1px); */
+  /* letter-spacing: 1px; */
+}
+
+.main-font-family {
+  font-family: "Courier New", monospace;
+}
+
+#computer,
+#screen,
+#triMain,
+#triRightSmall,
+#triLeft,
+#triRight,
+#triLeftSmall {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Computer Screen Content */
+/* .screen-content {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: cyan;
+  font-size: 1.2rem;
+  font-weight: bold;
+} */
+
+.screen-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  color: cyan;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  padding: 10px;
+  text-align: center;
+}
+
+.screen-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.screen-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+/* Styling for Title & Description */
+.screen-content h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.screen-content p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.gear-section {
+  background: -webkit-gradient(
+    linear,
+    0% 100%,
+    100% 0%,
+    from(rgb(0, 15, 8)),
+    to(rgb(0, 15, 8))
+  );
+  background-repeat: no-repeat;
+}
+
+/* something */
+
+.title-description.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+/* Floating Computer */
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 3D Carousel - section  */
+/* .carousel-container {
+  bottom: 9rem;
+}
+
+.holograph-img {
+  top: 4rem;
+} */
+
+.carousel-container {
+  position: relative;
+  bottom: 10rem;
+  perspective: 1200px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+}
+
+.holograph-img {
+  top: 6rem;
+}
+
+/* Cyberpunk Background */
+.cyberpunk-bg {
+  /* background: linear-gradient(to right, #0a0f1e, #1b1f3a); */
+  color: #ffffff;
+}
+
+/* 3D Carousel */
+.carousel-container {
+  position: relative;
+  bottom: 10rem;
+  perspective: 1400px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+}
+
+/* Card Styles */
+.neon-glow {
+  /* background: rgba(15, 15, 40, 0.9); */
+  box-shadow: 0px 0px 15px 3px rgba(0, 234, 255, 0.8);
+  border: 2px solid rgba(130, 130, 130, 0.8);
+}
+
+/* Active Card */
+.active-card {
+  box-shadow: 0px 0px 5px 1px rgba(0, 234, 255, 0.8);
+  filter: blur(3px);
+  transform: scale(1.05);
+}
+
+/* Blurred Cards */
+.blurred-card {
+  filter: blur(3px);
+}
+
+/* Smoothly Move Active Card Forward on Hover */
+.hover-effect {
+  transition: background-color 0.5s ease-in-out, filter 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.hover-effect:hover {
+  /* transform: translateZ(-15px) scale(1.1) !important; */
+  background: rgba(30, 68, 71, 0.797);
+}
+
+/* ... (Existing CSS) */
+
+.expanded-card {
+  /* Styles for the expanded card */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out,
+    filter 0.5s ease-in-out, z-index 0.5s ease-in-out; /* Add transition */
+  opacity: 1; /* Make sure it's visible */
+  filter: none; /* Remove blur */
+  /* transform: scale(2) translateZ(0);  Moved to inline style for dynamic scaling */
+  /* z-index: 20; Moved to inline style for dynamic z-index */
+}
+
+/* ... (Rest of CSS) */
+
+/* HOME ANIMATE BACKGROUND */
+.hide {
+  display: none;
+}
+#matrix {
+  background-color: rgb(62, 62, 86);
+  animation: blur 10s infinite;
+  animation-delay: 10s;
+}
+
+@keyframes blur {
+  0% {
+    filter: url(#blur-horizontal);
+  }
+  2% {
+    filter: url(#none);
+  }
+  5% {
+    filter: url(#blur-horizontal);
+  }
+  7% {
+    filter: url(#none);
+  }
+  10% {
+    filter: url(#blur-horizontal);
+  }
+  12% {
+    filter: url(#none);
+  }
+  58% {
+    filter: url(#none);
+  }
+  60% {
+    filter: url(#blur-vertical);
+  }
+  62% {
+    filter: url(#none);
+  }
+  65% {
+    filter: url(#blur-horizontal);
+  }
+  67% {
+    filter: url(#none);
+  }
+  69% {
+    filter: url(#blur-vertical);
+  }
+  72% {
+    filter: url(#none);
+  }
+}
+
+/* TOUR GUIDE*/
+.tg-backdrop {
+  pointer-events: none !important;
+}
+
+/* GEAR MODAL SCROLLAR */
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.custom-scrollbar {
+  scrollbar-width: none;
 }

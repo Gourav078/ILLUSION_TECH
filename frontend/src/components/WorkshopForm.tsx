@@ -101,116 +101,125 @@ const WorkshopForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-8 max-w-xl mx-auto p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl shadow-lg backdrop-blur-md"
-    >
+    <div className="flex items-center justify-center">
       <Toaster position="top-right" />
-      <h2 className="text-3xl font-extrabold text-center mb-6 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-        Workshop Registration
-      </h2>
-
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="name" className="text-cyan-400">
-            Full Name
-          </Label>
-          <Input
-            id="name"
-            required
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="border border-cyan-500 focus:ring-cyan-400 rounded-lg text-gray-300 bg-gray-800"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-purple-400">
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            required
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            className="border border-purple-500 focus:ring-purple-400 rounded-lg text-gray-300 bg-gray-800"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="phone" className="text-pink-400">
-            Phone Number
-          </Label>
-          <Input
-            id="phone"
-            type="tel"
-            required
-            value={formData.phone}
-            onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
-            }
-            className="border border-pink-500 focus:ring-pink-400 rounded-lg text-gray-300 bg-gray-800"
-          />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="organization" className="text-cyan-400">
-            Organization/College
-          </Label>
-          <Input
-            id="organization"
-            required
-            value={formData.organization}
-            onChange={(e) =>
-              setFormData({ ...formData, organization: e.target.value })
-            }
-            className="border border-cyan-500 focus:ring-cyan-400 rounded-lg text-gray-300 bg-gray-800"
-          />
-          {errors.organization && (
-            <p className="text-red-500 text-sm">{errors.organization}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="reason" className="text-purple-400">
-            Why do you want to attend this workshop?
-          </Label>
-          <Textarea
-            id="reason"
-            required
-            value={formData.reason}
-            onChange={(e) =>
-              setFormData({ ...formData, reason: e.target.value })
-            }
-            className="border border-purple-500 focus:ring-purple-400 rounded-lg text-gray-300 bg-gray-800"
-          />
-          {errors.reason && (
-            <p className="text-red-500 text-sm">{errors.reason}</p>
-          )}
-        </div>
-      </div>
-      <Button
-        type="submit"
-        disabled={loading}
-        className={`w-full py-3 ${
-          loading
-            ? "bg-gray-500 cursor-not-allowed"
-            : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:to-pink-600"
-        } text-white font-bold rounded-lg shadow-lg transition-transform transform hover:scale-105`}
+      <div
+        className="relative bg-gray-800 border-[3px] border-gray-700 rounded-lg shadow-md p-6 w-full max-w-md"
+        style={{
+          maxWidth: "350px",
+        }}
       >
-        {loading ? "Submitting..." : "Submit Registration"}
-      </Button>
-    </form>
+        <h2 className="text-xl font-bold text-center text-gray-100 mb-4">
+          Workshop Registration
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="name" className="text-gray-400">
+              Full Name
+            </Label>
+            <Input
+              id="name"
+              required
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="w-full bg-gray-900 text-gray-100 rounded-md border border-gray-700 p-2"
+            />
+            {errors.name && (
+              <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <Label htmlFor="email" className="text-gray-400">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="w-full bg-gray-900 text-gray-100 rounded-md border border-gray-700 p-2"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <Label htmlFor="phone" className="text-gray-400">
+              Phone Number
+            </Label>
+            <Input
+              id="phone"
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+              className="w-full bg-gray-900 text-gray-100 rounded-md border border-gray-700 p-2"
+            />
+            {errors.phone && (
+              <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+            )}
+          </div>
+
+          <div>
+            <Label htmlFor="organization" className="text-gray-400">
+              Organization/College
+            </Label>
+            <Input
+              id="organization"
+              required
+              value={formData.organization}
+              onChange={(e) =>
+                setFormData({ ...formData, organization: e.target.value })
+              }
+              className="w-full bg-gray-900 text-gray-100 rounded-md border border-gray-700 p-2"
+            />
+            {errors.organization && (
+              <p className="text-sm text-red-500 mt-1">{errors.organization}</p>
+            )}
+          </div>
+
+          <div>
+            <Label htmlFor="reason" className="text-gray-400">
+              Why do you want to attend this workshop?
+            </Label>
+            <Textarea
+              id="reason"
+              required
+              value={formData.reason}
+              onChange={(e) =>
+                setFormData({ ...formData, reason: e.target.value })
+              }
+              className="w-full bg-gray-900 text-gray-100 rounded-md border border-gray-700 p-2"
+            />
+            {errors.reason && (
+              <p className="text-sm text-red-500 mt-1">{errors.reason}</p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-2 rounded-md font-bold ${
+              loading
+                ? "bg-gray-700 text-gray-100 rounded-full cursor-not-allowed"
+                : "bg-gray-50 rounded-full font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200 hover:text-gray-100 text-gray-800"
+            }`}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 
