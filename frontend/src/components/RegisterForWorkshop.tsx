@@ -56,7 +56,7 @@ const RegisterForWorkshop = () => {
       clearInterval(benefitInterval);
       clearInterval(targetInterval);
     };
-  }, []);
+  }, [benefits.length, targetAudiences.length]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
