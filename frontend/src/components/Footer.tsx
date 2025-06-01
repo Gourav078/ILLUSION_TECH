@@ -46,7 +46,7 @@ const Footer = () => {
               <GlitchText text="Social" /> Handles
             </p>
 
-            <span className="top-[33px] absolute w-[7rem] h-[4px] bg-[#3c4d8b]"></span>
+            <span className="top-[33px] absolute w-[7rem] h-[4px] bg-green-400"></span>
 
             <div className="flex items-center space-x-6 sm:space-x-6 justify-center">
               <TooltipProvider>
