@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import WorkshopForm from "./WorkshopForm";
 import { Button } from "./ui/button";
@@ -9,27 +8,7 @@ import MatrixRain from "./animata/MatrixRain";
 const RegisterForWorkshop = () => {
   const [currentBenefit, setCurrentBenefit] = useState(0);
   const [currentTarget, setCurrentTarget] = useState(0);
-  // const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     ([entry]) => {
-  //       setIsVisible(entry.isIntersecting);
-  //     },
-  //     { threshold: 0.4 } //for small screen size reduce it to 1
-  //   );
-
-  //   if (ref.current) {
-  //     observer.observe(ref.current);
-  //   }
-
-  //   return () => {
-  //     if (ref.current) {
-  //       observer.unobserve(ref.current);
-  //     }
-  //   };
-  // }, []);
 
   const benefits = [
     "Master the basics of Python programming",
@@ -60,147 +39,6 @@ const RegisterForWorkshop = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Floating Icons Background */}
-      {/* <div
-        className="absolute inset-0 bg-cover bg-center backdrop-blur-md bg-no-repeat opacity-40"
-        style={{ backgroundImage: "url('/register form background.png')" }}
-      >
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "10%",
-            left: "10%",
-          }}
-        >
-          <Image
-            src={`/icon-1.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "40%",
-            left: "50%",
-          }}
-        >
-          <Image
-            src={`/icon-2.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "60%",
-            left: "30%",
-          }}
-        >
-          <Image
-            src={`/icon-3.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "80%",
-            left: "90%",
-          }}
-        >
-          <Image
-            src={`/icon-4.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "30%",
-            left: "40%",
-          }}
-        >
-          <Image
-            src={`/icon-5.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "10%",
-            left: "90%",
-          }}
-        >
-          <Image
-            src={`/icon-6.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "20%",
-            left: "70%",
-          }}
-        >
-          <Image
-            src={`/icon-7.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "65%",
-            left: "65%",
-          }}
-        >
-          <Image
-            src={`/icon-8.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-        <div
-          className="floating-icon absolute rounded-full border border-white p-1 bg-black"
-          style={{
-            top: "90%",
-            left: "10%",
-          }}
-        >
-          <Image
-            src={`/icon-9.png`}
-            width={80}
-            height={80}
-            alt="floating-icon"
-            className="rounded-full"
-          />
-        </div>
-      </div> */}
       <MatrixRain />
       <div
         ref={ref}
