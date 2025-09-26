@@ -1,40 +1,20 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { Brain } from "lucide-react";
 import {
-  TrendingUp,
-  Users,
-  Brain,
-  Code,
-  Lock,
-  Server,
-  Shield,
-  Terminal,
-  Rocket,
-  Lightbulb,
-  Sparkles,
-  Wrench,
-  Bug,
-  Globe,
-  Cpu,
-} from "lucide-react";
+  workshops1,
+  workshops2,
+  WorkshopContent,
+} from "../../src/data/workshopsData";
 import "../app/globals.css";
 import MatrixRain from "./animata/MatrixRain";
-// import { Dialog, DialogTrigger, DialogContent } from "@radix-ui/react-dialog";
 import WorkshopForm from "./WorkshopForm";
 import "@sjmc11/tourguidejs/src/scss/tour.scss";
-// import { TourGuideClient } from "@sjmc11/tourguidejs";
 import dynamic from "next/dynamic";
-// import Carousel from "./animata/ComputerContainer";
 import { useSwipeable } from "react-swipeable";
 import { motion } from "framer-motion";
-
-type WorkshopContent = {
-  title: string;
-  description: string;
-  fullContent: string;
-  Icon: React.ElementType;
-};
+import TerminalWindow from "./animata/terminalWindow";
 
 declare global {
   interface Window {
@@ -42,608 +22,9 @@ declare global {
   }
 }
 
-const workshops1: WorkshopContent[] = [
-  {
-    Icon: Brain,
-    description: "It all started with a movie...",
-    title: "Why Choose IllusionSecurity.ai?",
-    fullContent: `<section class="py-12 px-4 md:px-24 bg-transparant text-white">
-  <!-- Story Section -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    <!-- Narrative Column -->
-    <div class="space-y-6">
-    <h2 class="text-3xl font-semibold text-cyan-400">It all started with a movie...</h2>
-      <p class="text-gray-300 leading-relaxed">
-        As a school student, I sat in a dark room, eyes glued to the screen, watching a hacker effortlessly break into a system. It felt like magic—lines of code flashing, firewalls crumbling, secrets unveiled.
-      </p>
-      <blockquote class="border-l-4 border-[#00ffff] pl-4 italic text-gray-200">
-        "How does hacking <em>really</em> work?"
-      </blockquote>
-    </div>
-
-    <!-- Visual Column -->
-    <div class="hidden md:block">
-      <img src="/Brain_Sec_Img.jpg"
-           alt="Cybersecurity visualization"
-           class="rounded-lg shadow-2xl neon-glow"
-           loading="lazy">
-    </div>
-  </div>
-
-  <!-- Problem Section -->
-  <div class="bg-gray-800 rounded-lg p-8 my-12">
-    <h3 class="text-2xl font-bold text-red-500 mb-6">The Problem:</h3>
-    <ul class="space-y-4 text-gray-300">
-      <li class="flex items-center">
-        <svg class="w-6 h-6 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-        No proper direction or guidance
-      </li>
-      <li class="flex items-center">
-        <svg class="w-6 h-6 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-        Outdated, uninspiring content
-      </li>
-      <li class="flex items-center">
-        <svg class="w-6 h-6 text-red-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-        No long-term student support
-      </li>
-    </ul>
-  </div>
-
-  <!-- Solution Section -->
-  <div class="my-12">
-    <h3 class="text-3xl font-bold text-[#00ffff] text-center mb-8">Our Revolution</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="feature-card p-6 rounded-lg bg-gray-800 hover:bg-gray-700 transition">
-        <svg class="w-12 h-12 text-[#00ffff] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
-        <h4 class="font-semibold mb-2">Real-World Skills</h4>
-        <p>Cutting-edge techniques employers need today</p>
-      </div>
-      <div class="feature-card p-6 rounded-lg bg-gray-800 hover:bg-gray-700 transition">
-        <svg class="w-12 h-12 text-[#00ffff] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-        </svg>
-        <h4 class="font-semibold mb-2">Lifelong Mentorship</h4>
-        <p>Ongoing support beyond course completion</p>
-      </div>
-      <div class="feature-card p-6 rounded-lg bg-gray-800 hover:bg-gray-700 transition">
-        <svg class="w-12 h-12 text-[#00ffff] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-        </svg>
-        <h4 class="font-semibold mb-2">Active Community</h4>
-        <p>Collaborate with aspiring cybersecurity professionals</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Call to Action -->
-<div class="text-center mt-12">
-    <h2 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 mb-6">
-      Are you ready to see beyond the illusion?
-    </h2>
-  </div>
-</section>
-                  `,
-  },
-  {
-    Icon: Code,
-    description:
-      "🌎 The Hidden War: How Cybersecurity & AI Became the Ultimate Weapons",
-    title: "Reality of Cyberworld & Artificial Intelligence",
-    fullContent: `
-      <section class="container bg-transparent text-white main-font-family mx-auto px-4 py-12">
-        <!-- The Past Section -->
-        <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-          <div class="md:w-1/2">
-            <h2 class="text-3xl font-bold text-[#00ffff] mb-4">⏳ The Past: When the World Was Unprepared</h2>
-            <p class="text-gray-300 mb-4">
-              There was a time when security meant locks and keys, not firewalls and encryption. The internet was young, a wild frontier where curiosity ruled over caution. Hackers were explorers, breaking into systems for fun, pushing the limits of technology.
-            </p>
-            <p class="text-gray-300 mb-4">But the world woke up.</p>
-            <ul class="text-left list-inside text-gray-400">
-              <li>🔺 <strong>Morris Worm (1988)</strong> – One of the first major cyberattacks, crashing thousands of computers overnight.</li>
-              <li>🔺 <strong>Melissa Virus (1999)</strong> – A simple email virus that spread worldwide, showing how vulnerable systems were.</li>
-              <li>🔺 <strong>Stuxnet (2010)</strong> – A cyberweapon that destroyed Iran’s nuclear centrifuges, proving that cyberwarfare was the future.</li>
-            </ul>
-          </div>
-          <div class="md:w-1/2">
-            <img src="/1sec.jpg" alt="The Past" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-          </div>
-        </div>
-
-        <!-- The Past Section part 2 -->
-        <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-          <p class="text-gray-300 md:w-1/2">
-            Back then, cybersecurity was reactive. We built firewalls, set passwords, and hoped for best.
-          </p>
-          <div class="hidden md:block w-px h-16 bg-gray-600 mx-4"></div>
-          <div class="block md:hidden w-16 h-px bg-gray-600 my-4"></div>
-          <p class="text-gray-300 md:w-1/2">
-            AI was just a dream—mostly limited to chess-playing programs and simple automation tools.
-          </p>
-        </div>
-
-        <!-- The Present Section -->
-        <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-          <div class="md:w-1/2 order-2 md:order-1">
-            <img src="/2sec.jpg" alt="The Present" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-          </div>
-          <div class="md:w-1/2 order-1 md:order-2">
-            <h2 class="text-3xl font-bold text-[#00ffff] mb-4">📍 The Present: Where We Are Now</h2>
-            <p class="text-gray-300 mb-4">
-              We are living in an era of invisible wars. Nations attack each other without a single bullet fired, bringing down power grids, stealing classified data, and manipulating elections—all through cyber warfare.
-            </p>
-            <p class="text-gray-300 mb-4">
-              Hackers no longer work alone. They use AI-powered attack bots that can break into systems in seconds. Meanwhile, companies and governments use AI to fight back.
-            </p>
-          </div>
-        </div>
-
-        <!-- The Present Section part 2 -->
-        <div class="flex flex-col md:flex-row gap-8 mb-12">
-          <!-- First Column -->
-          <div class="md:w-1/3">
-            <ul class="text-left list-inside text-gray-400">
-              <li>🚀 <strong>The 2023 Twitter Hack</strong> – AI-powered phishing attacks tricked high-profile users into revealing sensitive data.</li>
-              <li>🚀 <strong>The 2021 Colonial Pipeline Attack</strong> – A ransomware attack shut down a major fuel pipeline in the U.S., proving how cyberattacks can cripple economies.</li>
-              <li>🚀 <strong>The 2023 Microsoft Email Breach</strong> – Chinese hackers infiltrated Microsoft’s cloud services, exposing sensitive government data.</li>
-            </ul>
-          </div>
-
-          <!-- Divider -->
-          <div class="hidden md:block w-px h-auto bg-gray-600"></div>
-          <div class="block md:hidden w-full h-px bg-gray-600 my-4"></div>
-
-          <!-- Second Column -->
-          <div class="md:w-1/3">
-            <p class="text-gray-300">
-              Meanwhile, AI has taken over.
-            </p>
-            <ul class="text-left list-inside text-gray-400 mt-4">
-              <li>✅ <strong>AI-driven cybersecurity</strong> – AI detects threats faster than humans ever could.</li>
-              <li>✅ <strong>Deepfake technology</strong> – AI can generate fake videos so realistic they can be used to spread misinformation or commit fraud.</li>
-              <li>✅ <strong>AI-powered chatbots</strong> – Like ChatGPT, Gemini, and Copilot, these can write emails, generate code, and even create human-like conversations.</li>
-            </ul>
-          </div>
-
-          <!-- Divider -->
-          <div class="hidden md:block w-px h-auto bg-gray-600"></div>
-          <div class="block md:hidden w-full h-px bg-gray-600 my-4"></div>
-
-          <!-- Third Column -->
-          <div class="md:w-1/3">
-            <p class="text-gray-300">
-              But AI also comes with dark sides:
-            </p>
-            <ul class="text-left list-inside text-gray-400 mt-4">
-              <li>❌ <strong>AI-powered phishing</strong> – Scammers use AI to create perfect emails and voice messages, mimicking real people.</li>
-              <li>❌ <strong>Deepfake cybercrimes</strong> – AI-generated deepfake videos are used for scams, misinformation, and even political warfare.</li>
-              <li>❌ <strong>Job displacement</strong> – AI is replacing workers in cybersecurity, customer service, and even creative industries.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="text-center mb-12">
-          <p class="text-gray-300">
-            The war between cybersecurity and AI is no longer in the future. It is happening right now.
-          </p>
-        </div>
-
-        <div class="flex justify-center my-12">
-          <img src="https://placehold.co/800x400" alt="Divider Image" class="w-full md:w-3/4 lg:w-1/2 rounded-lg shadow-lg">
-        </div>
-
-        <!-- The Future Section -->
-        <div class="mb-12">
-          <!-- Title -->
-          <h2 class="text-3xl font-bold text-[#00ffff] mb-6 text-center">🔮 The Future: The Unstoppable Revolution</h2>
-
-          <!-- Two Parts -->
-          <div class="flex flex-col md:flex-row gap-8 mb-8">
-            <!-- Part 1: First List -->
-            <div class="md:w-1/2">
-              <p class="text-gray-300 mb-4">
-                The cybersecurity of tomorrow won’t be about just protecting data—it will be about defending reality itself.
-              </p>
-              <ul class="text-left list-inside text-gray-400">
-                <li>🔮 <strong>Quantum Hacking</strong> – The passwords we use today? Gone in milliseconds once quantum computing goes mainstream.</li>
-                <li>🔮 <strong>AI vs AI Cyber Wars</strong> – Imagine autonomous AI hackers fighting against AI-powered security systems in real time.</li>
-                <li>🔮 <strong>The End of Privacy</strong> – Everything you do, say, or think online—recorded, analyzed, and used against you.</li>
-                <li>🔮 <strong>Cybersecurity as a Survival Skill</strong> – The ability to defend yourself online will be as essential as knowing how to swim.</li>
-              </ul>
-            </div>
-
-            <div class="hidden md:block w-px h-auto bg-gray-600"></div>
-            <div class="block md:hidden w-full h-px bg-gray-600 my-4"></div>
-
-            <!-- Part 2: Second List -->
-            <div class="md:w-1/2">
-              <p class="text-gray-300 mb-4">
-                New threats are emerging faster than ever:
-              </p>
-              <ul class="text-left list-inside text-gray-400">
-                <li>⚠️ <strong>AI-powered ransomware</strong> – Future malware could adapt and learn in real time, making it nearly impossible to stop.</li>
-                <li>⚠️ <strong>Autonomous cyberweapons</strong> – AI-powered cyberattacks could be launched without human intervention.</li>
-                <li>⚠️ <strong>Synthetic identities</strong> – AI can create completely fake people with realistic voices and identities, making fraud undetectable.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Remaining Content -->
-          <div class="text-gray-300">
-            <p class="mb-4">
-              The line between human intelligence and artificial intelligence is disappearing.
-            </p>
-            <p>
-              Are you ready for what comes next?
-            </p>
-          </div>
-        </div>
-
-        <!-- The Hard Truth Section -->
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-[#00ffff] mb-4">💡 The Hard Truth: You Have Two Choices</h2>
-          <p class="text-gray-300 mb-4">
-            The world is changing faster than you think. You can either:
-          </p>
-
-          <!-- Styled Buttons for Choices -->
-          <div class="flex flex-col md:flex-row justify-center gap-4 mb-6">
-            <!-- Incorrect Option -->
-            <button id="ignore-btn" class="bg-gray-800 text-gray-300 px-10 py-3 rounded-lg hover:bg-red-700 transition duration-300 w-full md:w-84">
-              ❌ Ignore it—and become just another victim in the cyber war.
-            </button>
-
-            <!-- Correct Option -->
-            <button id="master-btn" class="bg-green-800 text-gray-300 px-10 py-3 rounded-lg hover:bg-green-700 transition duration-300 w-full md:w-84">
-              ✅  Master it—and become a warrior, a protector, a legend in the cyber-AI battlefield.
-            </button>
-          </div>
-
-          <p class="text-gray-300 mb-6">
-            That’s why <span class="font-bold text-[#00ffff]">IllusionSecurity.ai</span> exists.
-          </p>
-          <p class="text-gray-300 mb-6">
-            This is not just a training platform. This is a movement. A chance to see beyond the illusion, to break into the most powerful domain of the future—Cybersecurity & AI.
-          </p>
-        </div>
-
-        <!-- Why Choose IllusionSecurity.ai Section -->
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-[#00ffff] mb-4">👊 Why Choose IllusionSecurity.ai?</h2>
-          <p class="text-gray-300 mb-6">
-            Unlike other training institutes that treat students like numbers, we believe in creating real-world experts.
-          </p>
-          <ul class="text-left list-inside text-gray-400 mb-6">
-            <li>💡 We don’t teach cybersecurity. We make you live it.</li>
-            <li>💡 We don’t throw certifications at you. We build your skills to face the real cyber world.</li>
-            <li>💡 We don’t stop at knowledge. We create warriors who can fight in this digital battlefield.</li>
-          </ul>
-          <p class="text-gray-300 mb-6">
-            We believe in curiosity, hands-on learning, and long-term mentorship. We believe in you.
-          </p>
-          <p class="text-gray-300 mb-6">
-            The world is being rewritten in code. Are you ready to take control?
-          </p>
-          <button class="bg-cyan-500 text-white px-8 py-3 rounded-full font-bold hover:bg-cyan-600 transition duration-300">
-            🔥 Join the Revolution 🔥
-          </button>
-        </div>
-      </section>`,
-  },
-  {
-    Icon: Lock,
-    description: "The future is here—will you be ready?",
-    title: "The AI & Cybersecurity Workshop That Will Open Your Eyes",
-    fullContent: `<section class="container bg-transparant text-white main-font-family mx-auto px-4 py-12">
-    <!-- Title Section -->
-    <div class="text-center mb-12">
-      <p class="text-[2rem] text-cyan-400">Imagine This...</p>
-    </div>
-
-    <!-- Introduction Section -->
-    <div class="flex flex-col gap-8 mb-12">
-      <!-- First Part: First List with Image on Left -->
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <div class="md:w-1/2">
-          <img src="https://placehold.co/600x400" alt="AI Hacking" class="w-full rounded-lg shadow-lg">
-        </div>
-        <div class="md:w-1/2">
-          <p class="text-gray-300 mb-6">
-            It’s the year 2030. You wake up, check your phone, and see a shocking headline:
-          </p>
-          <ul class="text-left list-inside text-gray-400 mb-6">
-            <li>💥 <strong>"AI-Powered Hacker Drains Millions from Global Bank in Seconds!"</strong></li>
-            <li>💥 <strong>"Deepfake Scam Steals Identities of 100,000 People!"</strong></li>
-            <li>💥 <strong>"AI Now Replacing Cybersecurity Professionals – Are Humans No Longer Needed?"</strong></li>
-          </ul>
-          <p class="text-gray-300 mb-6">
-            Sounds like science fiction, right? But this isn’t the future. It’s already happening.
-          </p>
-        </div>
-      </div>
-
-      <!-- Second Part: Second List with Image on Right -->
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <div class="md:w-1/2 order-2 md:order-1">
-          <ul class="text-left list-inside text-gray-400 mb-6">
-            <li>🔹 AI is writing code, making art, composing music… and hacking systems.</li>
-            <li>🔹 Cybercriminals are smarter than ever, breaking into governments and billion-dollar companies.</li>
-            <li>🔹 Jobs are disappearing, but new opportunities are opening up—if you know where to look.</li>
-          </ul>
-          <p class="text-gray-300 mb-6">
-            The real question is: Are you ready for this future? Or will you be left behind?
-          </p>
-        </div>
-        <div class="md:w-1/2 order-1 md:order-2">
-          <img src="https://placehold.co/600x400" alt="AI Opportunities" class="w-full rounded-lg shadow-lg">
-        </div>
-      </div>
-    </div>
-
-    <!-- The Harsh Truth Section -->
-    <div class="flex flex-col gap-8 mb-12">
-      <!-- First Part: Centered Content (No Image) -->
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-[#00ffff] mb-4">💡 The Harsh Truth: No One is Teaching You This</h2>
-        <p class="text-gray-300 mb-6">
-          Most AI & Cybersecurity courses are stuck in the past.
-        </p>
-        <ul class="text-left list-inside text-gray-400 mb-6">
-          <li>📌 They teach outdated concepts.</li>
-          <li>📌 They give you certificates that don’t actually get you hired.</li>
-          <li>📌 They make you memorize theories, but never show you the real-world skills.</li>
-        </ul>
-      </div>
-
-      <!-- Second Part: Content with Image -->
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <div class="md:w-1/2">
-          <img src="https://placehold.co/600x400" alt="Harsh Truth" class="w-full rounded-lg shadow-lg">
-        </div>
-        <div class="md:w-1/2">
-          <p class="text-left text-gray-300 mb-6">
-            👉 That’s why I created this workshop. Because you deserve more than just theory.
-          </p>
-          <p class="text-left text-gray-300 mb-6">
-            👉 You deserve to see how AI is changing cybersecurity and how cybersecurity is controlling AI.
-          </p>
-          <p class="text-left text-gray-300 mb-6">
-            👉 You deserve a real, hands-on experience that will blow your mind.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- The Workshop Experience Section -->
-    <div class="mb-12">
-      <h2 class="text-3xl font-bold text-[#00ffff] mb-6 text-center">🔥 The Workshop Experience: What You’ll Discover</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Live Hacking Demo -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">🚨 LIVE Hacking Demo</h3>
-          <p class="text-gray-300">Watch me hack into a system (legally!) and see how cybercriminals think.</p>
-        </div>
-
-        <!-- AI Challenge -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">🚨 AI Challenge</h3>
-          <p class="text-gray-300">Can you outsmart an AI chatbot? Let’s test your skills.</p>
-        </div>
-
-        <!-- Cyber Attack Case Studies -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">🚨 Cyber Attack Case Studies</h3>
-          <p class="text-gray-300">The biggest hacks in history and what we learned from them.</p>
-        </div>
-
-        <!-- Career Roadmap -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">🚨 Career Roadmap</h3>
-          <p class="text-gray-300">How to break into AI & Cybersecurity even if you have ZERO experience.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Why This Workshop is a Game-Changer Section -->
-    <div class="mb-12">
-      <h2 class="text-3xl font-bold text-[#00ffff] mb-6 text-center">🚀 Why This Workshop is a Game-Changer</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">✅ Real-World Experience</h3>
-          <p class="text-gray-300">You’ll experience AI & Cybersecurity in action, not just hear about it.</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">✅ Step-by-Step Guide</h3>
-          <p class="text-gray-300">You’ll get a clear roadmap to launching your career.</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#00ffff] mb-4">✅ Industry Insights</h3>
-          <p class="text-gray-300">You’ll see the truth about this industry—what no one else is telling you.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- The Offer Section -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-[#00ffff] mb-6">💰 The Offer: Take the First Step Now</h2>
-      <p class="text-gray-300 mb-6">
-        This is not just another "tech workshop." This is your entry ticket into a field that’s changing the world.
-      </p>
-      <p class="text-gray-300 mb-6">
-        By the end of the session, you’ll get an exclusive invitation to my full training—designed to take you from beginner to expert in months, not years.
-      </p>
-      <p class="text-gray-300 mb-6">
-        ⚠️ But first, you need to experience it.
-      </p>
-      <p class="text-gray-300 mb-6">
-        Seats are LIMITED. The future won’t wait for you.
-      </p>
-      <button class="bg-cyan-500 text-white px-8 py-3 rounded-full font-bold hover:bg-cyan-600 transition duration-300">
-        🔻 REGISTER NOW & Take Control of Your Future! 🔻
-      </button>
-    </div>
-  </section>`,
-  },
-  {
-    Icon: Server,
-    description:
-      "Configure and maintain enterprise-grade security infrastructure",
-    title: "Network Defense",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Shield,
-    description:
-      "Hands-on penetration testing in our secure virtual environment",
-    title: "Offensive Security Lab",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Terminal,
-    description: "Master binary exploitation and reverse engineering",
-    title: "Advanced Exploitation",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Users,
-    title: "1-1 Discussion",
-    description: "Personalized mentoring sessions with industry experts",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: TrendingUp,
-    title: "Market Growth",
-    description: "Insights into rapidly expanding cybersecurity and AI sectors",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-];
-
-const workshops2: WorkshopContent[] = [
-  {
-    Icon: Brain,
-    title: "Latest Technology",
-    description: "Hands-on experience with cutting-edge AI and security tools",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Rocket,
-    title: "Career Path",
-    description: "Guidance for building a successful career in tech",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Wrench,
-    title: "Industry Tools",
-    description: "Training on professional-grade security and AI platforms",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Lightbulb,
-    title: "Future Scope",
-    description: "Exploration of emerging technologies and opportunities",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Sparkles,
-    title: "Increasing Curiosity",
-    description: "Engaging projects that spark innovation and learning",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Bug,
-    description: "Engaging projects that spark innovation and learning",
-    title: "Eco Workshop",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Globe,
-    description: "Engaging projects that spark innovation and learning",
-    title: "Analytics Workshop",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-  {
-    Icon: Cpu,
-    description: "Engaging projects that spark innovation and learning",
-    title: "Speaking Workshop",
-    fullContent: `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-  },
-];
-
 const SemiGearPage = () => {
-  const [hoveredContent, setHoveredContent] = useState<WorkshopContent>({
+  // const [hasInteracted, setHasInteracted] = useState(false);
+  const [hoveredContent] = useState<WorkshopContent>({
     title: "Welcome to the Cybersecurity & AI Hub",
     description: "Hover or click an icon to view details.",
     Icon: Brain,
@@ -761,6 +142,71 @@ const SemiGearPage = () => {
 
   // FORM ALIGNMENT
   const [showFormModal, setShowFormModal] = useState(false);
+
+  // FOR NEW UI
+  const [apple, setApple] = useState(false); // controls expanded/collapsed stat
+  const [showIcons, setShowIcons] = useState(false);
+  const [reversing, setReversing] = useState(false);
+  const [isFadingOutIcons, setIsFadingOutIcons] = useState(false);
+
+  // right side lines
+  const [banana, setBanana] = useState(false);
+  const [showIconsRight, setShowIconsRight] = useState(false);
+  const [isFadingOutIconsRight, setIsFadingOutIconsRight] = useState(false);
+  const [reversingRight, setReversingRight] = useState(false);
+
+  // -------------
+  const script1: { type: "command" | "output"; text: string }[] = [
+    {
+      type: "command",
+      text: "python train.py --model=efficientnet --epochs=50",
+    },
+    { type: "output", text: "Loading dataset 'CIFAR-100'..." },
+    { type: "output", text: "Found 50000 images belonging to 100 classes." },
+    {
+      type: "output",
+      text: "Epoch 25/50 - loss: 0.0871 - acc: 0.9712 - val_acc: 0.9250",
+    },
+    { type: "command", text: "tensorboard --logdir ./training_logs" },
+    { type: "output", text: "TensorBoard 2.15.0 at http://localhost:6006/" },
+    { type: "command", text: "git pull origin main" },
+    { type: "output", text: "Updating 2f8e9a1..c3d7b4e" },
+    { type: "output", text: "Fast-forward | src/models/attention.py | 2 +- " },
+    { type: "command", text: "pip install --upgrade scikit-learn" },
+    {
+      type: "output",
+      text: "Requirement already satisfied: scikit-learn in /usr/local/lib/",
+    },
+    { type: "output", text: "Successfully installed numpy-1.26.0" },
+  ];
+
+  const script2: { type: "command" | "output"; text: string }[] = [
+    { type: "command", text: "nmap -sV -p- 192.168.1.102 --open" },
+    { type: "output", text: "Host is up (0.0021s latency)." },
+    { type: "output", text: "Found open port 22/tcp on 192.168.1.102" },
+    { type: "output", text: "Found open port 80/tcp on 192.168.1.102" },
+    {
+      type: "output",
+      text: "Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel",
+    },
+    { type: "command", text: "john --wordlist=pass.lst hashes.txt" },
+    {
+      type: "output",
+      text: "Loaded 2 password hashes with no different salts",
+    },
+    {
+      type: "output",
+      text: "Press 'q' or Ctrl-C to abort, almost any other key for status",
+    },
+    { type: "output", text: "password123      (root)" },
+    {
+      type: "command",
+      text: "msfconsole -q -x 'search type:exploit cve:2024'",
+    },
+    { type: "output", text: "Matching Modules" },
+    { type: "output", text: "================ " },
+    { type: "output", text: "exploit/windows/smb/ms17_010_eternalblue" },
+  ];
 
   return (
     <>
@@ -1058,7 +504,9 @@ const SemiGearPage = () => {
                 </p>
                 <div
                   className="text-gray-300 max-h-[60vh] text-sm md:text-lg"
-                  dangerouslySetInnerHTML={{ __html: modalContent.fullContent }}
+                  dangerouslySetInnerHTML={{
+                    __html: modalContent.fullContent ?? "",
+                  }}
                 />
               </div>
             </div>
@@ -1088,117 +536,256 @@ const SemiGearPage = () => {
             <MatrixRain />
           </div>
           {/* Rotating Circle - left */}
-          <div
-            data-tg-tour="<p>These are the feature's click on it to view.</p>"
-            data-tg-order={0}
-            className="circle-container left-[-440px] h-[10rem] w-[50vw] flex justify-center items-center overflow-hidden"
-          >
+          {/* <div className="circle-container left-[-410px] h-[20rem] w-[50vw] flex justify-center items-center overflow-hidden relative">
             <svg
-              fill="#000000"
-              height="860px" /* Slightly reduce size */
-              width="860x"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              // viewBox="-25.6 -25.6 563.20 563.20"
-              viewBox="-25 -25 550 550"
-              stroke="#1f2937"
-              // stroke-width="2.56"
-              strokeWidth="2"
+              className="svg-connect absolute inset-0 w-[1000px] h-[1200px]"
+              viewBox="0 0 1000 1000"
             >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                // stroke="#CCCCCC"
-                // stroke="#00eaff"
-                stroke="#4ADE80"
-                opacity={0.8}
-                strokeWidth="10.336000000000002"
-              >
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M256,151.972c-56.436,0-102.35,45.913-102.35,102.349s45.915,102.35,102.35,102.35s102.35-45.915,102.35-102.35 C358.35,197.886,312.436,151.972,256,151.972z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M488.727,192.188h-15.099c-4.881-16.342-11.414-32.361-19.025-46.584l11.205-11.371 c8.707-8.802,8.677-23.069-0.069-31.834l-57.599-57.901c-4.225-4.236-9.962-6.961-15.943-6.961c-0.044,0-0.089,0-0.132,0 c-6.028,0-11.79,2.833-15.997,7.15l-10.359,10.976c-14.097-7.654-29.457-14.06-45.149-18.824V22.522 C320.561,10.084,310.478,0,298.039,0h-84.082c-12.438,0-22.522,10.084-22.522,22.522v14.309 c-15.755,4.772-31.145,11.036-45.236,18.681L135.51,44.529c-4.216-4.276-9.967-6.992-15.973-6.992c-0.021,0-0.042,0-0.065,0 c-5.983,0-11.722,2.665-15.949,6.904l-57.436,57.883c-8.719,8.743-8.772,22.876-0.12,31.685l11.383,11.588 c-7.585,14.201-14.108,30.195-18.989,46.591h-15.09c-12.438,0-22.522,10.084-22.522,22.522v82.581 c0,12.438,10.084,22.522,22.522,22.522h15.156c4.736,15.51,11.114,30.738,18.749,44.765L46.46,375.05 c-4.311,4.213-6.754,9.977-6.781,16.004s2.362,11.814,6.633,16.066l57.599,57.333c4.275,4.254,10.094,6.647,16.106,6.558 c6.031-0.059,11.786-2.533,15.977-6.869l10.38-10.739c13.985,7.543,29.313,13.883,45.062,18.63v17.444 c0,12.438,10.084,22.522,22.522,22.522h84.082c12.438,0,22.522-10.084,22.522-22.522v-17.459 c15.753-4.772,31.145-11,45.236-18.645l10.689,11.021c4.218,4.276,9.968,7.066,15.974,7.066c0.021,0,0.042,0,0.065,0 c5.983,0,11.722-2.739,15.949-6.977l57.436-57.958c4.284-4.294,6.653-10.135,6.572-16.201c-0.08-6.064-2.604-11.841-6.998-16.021 l-10.467-9.955c7.542-13.929,13.857-29.076,18.564-44.536h15.145c12.438,0,22.522-10.084,22.522-22.522V214.71 C511.249,202.272,501.165,192.188,488.727,192.188z M256,394.208c-77.135,0-139.887-62.752-139.887-139.887 c0-77.133,62.752-139.886,139.887-139.886s139.887,62.754,139.887,139.886C395.887,331.456,333.135,394.208,256,394.208z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M256,151.972c-56.436,0-102.35,45.913-102.35,102.349s45.915,102.35,102.35,102.35s102.35-45.915,102.35-102.35 C358.35,197.886,312.436,151.972,256,151.972z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M488.727,192.188h-15.099c-4.881-16.342-11.414-32.361-19.025-46.584l11.205-11.371 c8.707-8.802,8.677-23.069-0.069-31.834l-57.599-57.901c-4.225-4.236-9.962-6.961-15.943-6.961c-0.044,0-0.089,0-0.132,0 c-6.028,0-11.79,2.833-15.997,7.15l-10.359,10.976c-14.097-7.654-29.457-14.06-45.149-18.824V22.522 C320.561,10.084,310.478,0,298.039,0h-84.082c-12.438,0-22.522,10.084-22.522,22.522v14.309 c-15.755,4.772-31.145,11.036-45.236,18.681L135.51,44.529c-4.216-4.276-9.967-6.992-15.973-6.992c-0.021,0-0.042,0-0.065,0 c-5.983,0-11.722,2.665-15.949,6.904l-57.436,57.883c-8.719,8.743-8.772,22.876-0.12,31.685l11.383,11.588 c-7.585,14.201-14.108,30.195-18.989,46.591h-15.09c-12.438,0-22.522,10.084-22.522,22.522v82.581 c0,12.438,10.084,22.522,22.522,22.522h15.156c4.736,15.51,11.114,30.738,18.749,44.765L46.46,375.05 c-4.311,4.213-6.754,9.977-6.781,16.004s2.362,11.814,6.633,16.066l57.599,57.333c4.275,4.254,10.094,6.647,16.106,6.558 c6.031-0.059,11.786-2.533,15.977-6.869l10.38-10.739c13.985,7.543,29.313,13.883,45.062,18.63v17.444 c0,12.438,10.084,22.522,22.522,22.522h84.082c12.438,0,22.522-10.084,22.522-22.522v-17.459 c15.753-4.772,31.145-11,45.236-18.645l10.689,11.021c4.218,4.276,9.968,7.066,15.974,7.066c0.021,0,0.042,0,0.065,0 c5.983,0,11.722-2.739,15.949-6.977l57.436-57.958c4.284-4.294,6.653-10.135,6.572-16.201c-0.08-6.064-2.604-11.841-6.998-16.021 l-10.467-9.955c7.542-13.929,13.857-29.076,18.564-44.536h15.145c12.438,0,22.522-10.084,22.522-22.522V214.71 C511.249,202.272,501.165,192.188,488.727,192.188z M256,394.208c-77.135,0-139.887-62.752-139.887-139.887 c0-77.133,62.752-139.886,139.887-139.886s139.887,62.754,139.887,139.886C395.887,331.456,333.135,394.208,256,394.208z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="" />
+                  <feMerge>
+                    <feMergeNode in="" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {apple &&
+                workshops1.slice(0, 4).map((_, index) => {
+                  const centerX = 400;
+                  const centerY = 300;
+                  const stepX = 550;
+                  const stepY = 150 + index * 100;
+
+                  // Create curved path
+                  const controlX1 = centerX + 80;
+                  const controlY1 = centerY - 20;
+                  const controlX2 = stepX - 80;
+                  const controlY2 = stepY;
+
+                  return (
+                    <path
+                      key={index}
+                      d={`M ${centerX} ${centerY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${stepX} ${stepY}`}
+                      fill="none"
+                      stroke="#39ff14"
+                      strokeWidth="4"
+                      opacity={0.9}
+                      className={reversing ? "reverse-path" : "draw-path"}
+                      style={{
+                        animationDelay: `${index * 0.2}s`,
+                        animationPlayState:
+                          apple || reversing ? "running" : "paused",
+                      }}
+                    />
+                  );
+                })}
             </svg>
-            <div className="single-container">
-              {workshops1.map((workshop, index) => (
+
+            <div
+              className="w-24 h-24 bg-black rounded-full flex justify-center items-center text-white cursor-pointer transition-transform duration-300 z-10 center-icon border border-[rgba(26,255,0,0.727)] relative"
+              // onClick={() => setApple(!apple)}
+              onClick={() => {
+                if (!apple) {
+                  // Animate in
+                  setApple(true);
+                  setReversing(false);
+                  setShowIcons(false);
+                  setIsFadingOutIcons(false);
+                  setTimeout(() => setShowIcons(true), 90); // after lines animate in
+                } else {
+                  // Animate out
+                  setIsFadingOutIcons(true); // play fade-out animation
+                  setShowIcons(false); // hide icon content logically
+                  setReversing(true); // reverse the line animation
+                  setTimeout(() => {
+                    setApple(false); // hide lines after animation
+                    setReversing(false);
+                    setIsFadingOutIcons(false); // reset fade state
+                  }, 100);
+                }
+              }}
+              style={{
+                border: `4px solid rgba(26,255,0,0.727)`,
+                boxShadow: apple
+                  ? "0 0 20px rgba(26,255,0,0.5)"
+                  : "0 0 10px rgba(26,255,0,0.3)",
+              }}
+            >
+              <span className="text-center text-[2.5rem]">AI</span>
+            </div>
+
+            <div
+              className="single-container absolute right-[-50px] flex flex-col justify-center gap-14 transition-all duration-500"
+              style={{
+                top: "0%",
+                rotate: "-22.5deg",
+              }}
+            >
+              {workshops1.slice(0, 4).map((workshop, index) => (
                 <div
                   key={index}
-                  className="icon-container"
-                  onMouseEnter={() =>
-                    setHoveredContent({
-                      title: workshop.title,
-                      description: workshop.description,
-                      Icon: workshop.Icon,
-                      fullContent: workshop.fullContent,
-                    })
-                  }
-                  onMouseLeave={() =>
-                    setHoveredContent({
-                      title:
-                        selectedContent?.title ||
-                        "Why Choose IllusionSecurity.ai?",
-                      description:
-                        selectedContent?.description ||
-                        "It all started with a movie...",
-                      Icon: selectedContent?.Icon || Brain,
-                      fullContent:
-                        selectedContent?.fullContent ||
-                        `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-                    })
-                  }
-                  onClick={() =>
-                    setSelectedContent({
-                      title: workshop.title,
-                      description: workshop.description,
-                      Icon: workshop.Icon,
-                      fullContent: workshop.fullContent,
-                    })
-                  }
+                  className={`icon-container2 relative ${
+                    showIcons
+                      ? "fade-slide-in"
+                      : isFadingOutIcons
+                      ? "fade-slide-out"
+                      : "hidden-icon"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.2 + 1}s`,
+                    animationFillMode: "forwards",
+                  }} // staggered after lines
+                  onClick={() => {
+                    setSelectedContent(workshop);
+                  }}
                 >
-                  <workshop.Icon className="w-10 h-10 text-green-400 " />
+                  <div className="flex items-center gap-3 bg-black bg-opacity-80 px-4 py-2 cursor-pointer hover:bg-opacity-90 transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-transparent text-green-400 flex items-center justify-center">
+                      <workshop.Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-sm text-white font-medium">
+                      Step {index + 1}
+                    </span>
+                  </div>
                 </div>
               ))}
-              {/* Center Gear Icon */}
-              <div className="center-icon">
-                <span>⚙️</span>
-              </div>
+            </div>
+
+            <TerminalWindow title="Git Status" script={script1} />
+          </div> */}
+          {/* Rotating Circle - left */}
+          <div className="circle-container left-[-410px] h-[20rem] w-[50vw] flex justify-center items-center overflow-hidden relative">
+            {/* SVG for curved connections (code remains the same) */}
+            <svg
+              className="svg-connect absolute inset-0 w-[1000px] h-[1200px]"
+              viewBox="0 0 1000 1000"
+            >
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="" />
+                  <feMerge>
+                    <feMergeNode in="" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {apple &&
+                workshops1.slice(0, 4).map((_, index) => {
+                  const centerX = 400;
+                  const centerY = 300;
+                  const stepX = 550;
+                  const stepY = 150 + index * 100;
+                  const controlX1 = centerX + 80;
+                  const controlY1 = centerY - 20;
+                  const controlX2 = stepX - 80;
+                  const controlY2 = stepY;
+
+                  return (
+                    <path
+                      key={index}
+                      d={`M ${centerX} ${centerY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${stepX} ${stepY}`}
+                      fill="none"
+                      stroke="#39ff14"
+                      strokeWidth="4"
+                      opacity={0.9}
+                      className={reversing ? "reverse-path" : "draw-path"}
+                      style={{
+                        animationDelay: `${index * 0.2}s`,
+                        animationPlayState:
+                          apple || reversing ? "running" : "paused",
+                      }}
+                    />
+                  );
+                })}
+            </svg>
+
+            {/* Center Icon (code remains the same) */}
+            <div
+              className="w-24 h-24 bg-black rounded-full flex justify-center items-center text-white cursor-pointer transition-transform duration-300 z-10 center-icon border border-[rgba(26,255,0,0.727)] relative"
+              onClick={() => {
+                if (!apple) {
+                  setApple(true);
+                  setReversing(false);
+                  setShowIcons(false);
+                  setIsFadingOutIcons(false);
+                  setTimeout(() => setShowIcons(true), 90);
+                } else {
+                  setIsFadingOutIcons(true);
+                  setShowIcons(false);
+                  setReversing(true);
+                  setTimeout(() => {
+                    setApple(false);
+                    setReversing(false);
+                    setIsFadingOutIcons(false);
+                  }, 100);
+                }
+              }}
+              style={{
+                border: `4px solid rgba(26,255,0,0.727)`,
+                boxShadow: apple
+                  ? "0 0 20px rgba(26,255,0,0.5)"
+                  : "0 0 10px rgba(26,255,0,0.3)",
+              }}
+            >
+              <span className="text-center text-[2.5rem]">AI</span>
+            </div>
+
+            {/* Surrounding Icons (Steps) (code remains the same) */}
+            <div
+              className="single-container absolute right-[-50px] flex flex-col justify-center gap-14 transition-all duration-500"
+              style={{
+                top: "0%",
+                rotate: "-22.5deg",
+              }}
+            >
+              {workshops1.slice(0, 4).map((workshop, index) => (
+                <div
+                  key={index}
+                  className={`icon-container2 relative ${
+                    showIcons
+                      ? "fade-slide-in"
+                      : isFadingOutIcons
+                      ? "fade-slide-out"
+                      : "hidden-icon"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.2 + 1}s`,
+                    animationFillMode: "forwards",
+                  }}
+                  onClick={() => {
+                    setSelectedContent(workshop);
+                  }}
+                >
+                  <div className="flex items-center gap-3 bg-black bg-opacity-80 px-4 py-2 cursor-pointer hover:bg-opacity-90 transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-transparent text-green-400 flex items-center justify-center">
+                      <workshop.Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-sm text-white font-medium">
+                      Step {index + 1}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* --- 1. WRAPPER FOR THE TERMINAL WINDOW --- */}
+            <div
+              className={`absolute transition-all duration-500 ease-in-out ${
+                apple
+                  ? "opacity-0 filter blur-md pointer-events-none" // When steps are visible, hide and blur terminal
+                  : "opacity-100 filter-none" // When steps are hidden, show terminal
+              }`}
+              style={{
+                // Position it to align with the steps container for a smooth transition
+                right: "-150px",
+                top: "12%",
+                rotate: "-22.5deg",
+              }}
+            >
+              <TerminalWindow title="AI Model Training" script={script1} />
             </div>
           </div>
 
@@ -1296,118 +883,9 @@ const SemiGearPage = () => {
                             selectedContent?.description ||
                             "It all started with a movie.",
                           Icon: selectedContent?.Icon || Brain,
-                          fullContent:
-                            selectedContent?.fullContent ||
-                            `<section class="bg-transparant text-white main-font-family container mx-auto px-4 py-12">
-                              <!-- Introduction -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2">
-                                  <p class="text-gray-300 mb-6">
-                                    As a school student, I sat in a dark room, eyes glued to the screen, watching a hacker effortlessly break into a system. It felt like magic—lines of code flashing, firewalls crumbling, secrets unveiled. That moment ignited something in me. A burning curiosity. A question I couldn’t shake:
-                                  </p>
-                                  <p class="text-2xl font-semibold text-[#00ffff]">"How does hacking really work?"</p>
-                                </div>
-                                <div class="md:w-1/2">
-                                  <img src="/1sec.jpg" alt="Hacker in action" class="w-[300px] h-[200px] lg:w-[600px] lg:h-[400px] sm:w-[600px] sm:h-[400px] rounded-lg shadow-lg object-coverr">
-                                </div>
-                              </div>
-
-                              <!-- Challenges Faced -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2 order-2 md:order-1">
-                                  <img src="/2sec.jpg" alt="Student searching for knowledge" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-                                </div>
-                                <div class="md:w-1/2 order-1 md:order-2">
-                                  <p class="text-gray-300 mb-4">
-                                    I wanted to learn. I searched everywhere—books, the internet, videos. But no matter where I looked, I hit the same wall:
-                                  </p>
-                                  <ul class="list-inside text-left text-gray-400 mb-4">
-                                    <li>❌ No proper direction</li>
-                                    <li>❌ No one to guide me</li>
-                                    <li>❌ Outdated, uninspiring content</li>
-                                  </ul>
-                                  <p class="text-gray-300">I was lost.</p>
-                                </div>
-                              </div>
-
-                              <!-- Training Institutes -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2">
-                                  <p class="text-gray-300 mb-4">
-                                    Like many others, I turned to training institutes that promised to teach hacking and cybersecurity. They handed out certifications, structured courses, and flashy marketing. But the deeper I went, the more I realized:
-                                  </p>
-                                  <ul class=" list-inside text-left text-gray-400 mb-4">
-                                    <li>🛑 They focused on selling courses, not sparking curiosity.</li>
-                                    <li>🛑 Their content was outdated, missing real-world relevance.</li>
-                                    <li>🛑 Once the training ended, they moved on—no long-term care for students.</li>
-                                  </ul>
-                                  <p class="text-gray-300">I knew there had to be a better way.</p>
-                                </div>
-                                <div class="md:w-1/2">
-                                  <img src="/3sec.jpg" alt="Training institute" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-                                </div>
-                              </div>
-
-                              <!-- Self-Learning Journey -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2 order-2 md:order-1">
-                                  <img src="/4sec.jpg" alt="Student learning" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-                                </div>
-                                <div class="md:w-1/2 order-1 md:order-2">
-                                  <p class="text-gray-300 mb-4">
-                                    So I took matters into my own hands. I taught myself. I spent nights buried in forums, breaking systems in virtual labs, and learning from real-world hacking challenges. I failed. A lot. But with every failure, I grew stronger.
-                                  </p>
-                                  <p class="text-2xl font-semibold text-[#00ffff] mb-6">
-                                    "If I struggled this much to find the right learning path, how many others are facing the same problem?"
-                                  </p>
-                                  <p class="text-gray-300">That’s when the idea for <span class="font-bold text-[#00ffff]">IllusionSecurity.ai</span> was born.</p>
-                                </div>
-                              </div>
-
-                              <!-- IllusionSecurity.ai Vision -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2">
-                                  <ul class=" list-inside text-left text-gray-400 mb-4">
-                                    <li>🚀 Not just another training institute, but a revolution.</li>
-                                    <li>🔥 Not just certifications, but real-world skills.</li>
-                                    <li>💡 Not just courses, but a lifelong learning journey.</li>
-                                  </ul>
-                                  <p class="text-gray-300">
-                                    At <span class="font-bold text-[#00ffff]">IllusionSecurity.ai</span>, we don’t just teach cybersecurity and AI—we make it exciting, immersive, and career-defining.
-                                  </p>
-                                </div>
-                                <div class="md:w-1/2">
-                                  <img src="/5sec.jpg" alt="IllusionSecurity.ai vision" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-                                </div>
-                              </div>
-
-                              <!-- Key Features -->
-                              <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
-                                <div class="md:w-1/2 order-2 md:order-1">
-                                  <img src="/6sec.jpg" alt="Hands-on labs" class="w-[600px] h-[400px] rounded-lg shadow-lg object-cover">
-                                </div>
-                                <div class="md:w-1/2 order-1 md:order-2">
-                                  <ul class=" list-inside text-left text-gray-400 mb-4">
-                                    <li>✅ <span class="font-bold">Hands-on labs & hacking challenges</span>—because theory alone won’t make you a hacker.</li>
-                                    <li>✅ <span class="font-bold">Mentorship that lasts beyond the course</span>—because your growth matters.</li>
-                                    <li>✅ <span class="font-bold">Cutting-edge skills that employers need</span>—because your future shouldn’t rely on outdated content.</li>
-                                    <li>✅ <span class="font-bold">A community that learns, competes, and evolves together</span>—because cybersecurity isn’t a solo journey.</li>
-                                  </ul>
-                                </div>
-                              </div>
-
-                              <!-- Closing Statement -->
-                              <div class="text-center">
-                                <p class="text-gray-300 mb-6">
-                                  I started this because I never want another student to feel lost like I did. This is more than just a training platform. This is the movement I wish existed when I was starting out.
-                                </p>
-                                <p class="text-3xl font-bold text-[#00ffff] mb-6">Welcome to IllusionSecurity.ai—where curiosity meets mastery, and learners become legends.</p>
-                                <p class="text-2xl font-semibold text-gray-300 mb-6">Are you ready to see beyond the illusion?</p>
-                                <button class="bg-[#00ffff] text-white-90 px-8 py-3 rounded-full font-bold hover:bg-cyan-600 transition duration-300">
-                                  🔥 Join the Revolution 🔥
-                                </button>
-                              </div>
-                           </section>`,
+                          fullContent: selectedContent?.fullContent || (
+                            <div>Hello</div>
+                          ),
                         })
                       }
                     >
@@ -1541,113 +1019,250 @@ const SemiGearPage = () => {
           </div>
 
           {/* Rotating Circle - right */}
-          <div className="circle-container top-0 right-[-440px] h-full w-[50vw] flex justify-center items-center overflow-hidden">
+          {/* <div className="circle-container top-0 right-[-410px] h-full w-[50vw] flex justify-center items-center overflow-hidden relative">
             <svg
-              fill="#000000"
-              height="700px"
-              width="700px"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="-25.6 -25.6 563.20 563.20"
-              // stroke="#1f2937"
-              stroke="rgba(0, 234, 255, 0.8);"
-              strokeWidth="2.56"
+              className="svg-connect-r absolute inset-0 w-[1000px] h-[1200px]"
+              viewBox="0 0 1000 1000"
             >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                // stroke="#CCCCCC"
-                // stroke="#00eaff"
-                stroke="#4ADE80"
-                opacity={0.8}
-                strokeWidth="10.336000000000002"
-              >
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M256,151.972c-56.436,0-102.35,45.913-102.35,102.349s45.915,102.35,102.35,102.35s102.35-45.915,102.35-102.35 C358.35,197.886,312.436,151.972,256,151.972z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M488.727,192.188h-15.099c-4.881-16.342-11.414-32.361-19.025-46.584l11.205-11.371 c8.707-8.802,8.677-23.069-0.069-31.834l-57.599-57.901c-4.225-4.236-9.962-6.961-15.943-6.961c-0.044,0-0.089,0-0.132,0 c-6.028,0-11.79,2.833-15.997,7.15l-10.359,10.976c-14.097-7.654-29.457-14.06-45.149-18.824V22.522 C320.561,10.084,310.478,0,298.039,0h-84.082c-12.438,0-22.522,10.084-22.522,22.522v14.309 c-15.755,4.772-31.145,11.036-45.236,18.681L135.51,44.529c-4.216-4.276-9.967-6.992-15.973-6.992c-0.021,0-0.042,0-0.065,0 c-5.983,0-11.722,2.665-15.949,6.904l-57.436,57.883c-8.719,8.743-8.772,22.876-0.12,31.685l11.383,11.588 c-7.585,14.201-14.108,30.195-18.989,46.591h-15.09c-12.438,0-22.522,10.084-22.522,22.522v82.581 c0,12.438,10.084,22.522,22.522,22.522h15.156c4.736,15.51,11.114,30.738,18.749,44.765L46.46,375.05 c-4.311,4.213-6.754,9.977-6.781,16.004s2.362,11.814,6.633,16.066l57.599,57.333c4.275,4.254,10.094,6.647,16.106,6.558 c6.031-0.059,11.786-2.533,15.977-6.869l10.38-10.739c13.985,7.543,29.313,13.883,45.062,18.63v17.444 c0,12.438,10.084,22.522,22.522,22.522h84.082c12.438,0,22.522-10.084,22.522-22.522v-17.459 c15.753-4.772,31.145-11,45.236-18.645l10.689,11.021c4.218,4.276,9.968,7.066,15.974,7.066c0.021,0,0.042,0,0.065,0 c5.983,0,11.722-2.739,15.949-6.977l57.436-57.958c4.284-4.294,6.653-10.135,6.572-16.201c-0.08-6.064-2.604-11.841-6.998-16.021 l-10.467-9.955c7.542-13.929,13.857-29.076,18.564-44.536h15.145c12.438,0,22.522-10.084,22.522-22.522V214.71 C511.249,202.272,501.165,192.188,488.727,192.188z M256,394.208c-77.135,0-139.887-62.752-139.887-139.887 c0-77.133,62.752-139.886,139.887-139.886s139.887,62.754,139.887,139.886C395.887,331.456,333.135,394.208,256,394.208z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M256,151.972c-56.436,0-102.35,45.913-102.35,102.349s45.915,102.35,102.35,102.35s102.35-45.915,102.35-102.35 C358.35,197.886,312.436,151.972,256,151.972z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M488.727,192.188h-15.099c-4.881-16.342-11.414-32.361-19.025-46.584l11.205-11.371 c8.707-8.802,8.677-23.069-0.069-31.834l-57.599-57.901c-4.225-4.236-9.962-6.961-15.943-6.961c-0.044,0-0.089,0-0.132,0 c-6.028,0-11.79,2.833-15.997,7.15l-10.359,10.976c-14.097-7.654-29.457-14.06-45.149-18.824V22.522 C320.561,10.084,310.478,0,298.039,0h-84.082c-12.438,0-22.522,10.084-22.522,22.522v14.309 c-15.755,4.772-31.145,11.036-45.236,18.681L135.51,44.529c-4.216-4.276-9.967-6.992-15.973-6.992c-0.021,0-0.042,0-0.065,0 c-5.983,0-11.722,2.665-15.949,6.904l-57.436,57.883c-8.719,8.743-8.772,22.876-0.12,31.685l11.383,11.588 c-7.585,14.201-14.108,30.195-18.989,46.591h-15.09c-12.438,0-22.522,10.084-22.522,22.522v82.581 c0,12.438,10.084,22.522,22.522,22.522h15.156c4.736,15.51,11.114,30.738,18.749,44.765L46.46,375.05 c-4.311,4.213-6.754,9.977-6.781,16.004s2.362,11.814,6.633,16.066l57.599,57.333c4.275,4.254,10.094,6.647,16.106,6.558 c6.031-0.059,11.786-2.533,15.977-6.869l10.38-10.739c13.985,7.543,29.313,13.883,45.062,18.63v17.444 c0,12.438,10.084,22.522,22.522,22.522h84.082c12.438,0,22.522-10.084,22.522-22.522v-17.459 c15.753-4.772,31.145-11,45.236-18.645l10.689,11.021c4.218,4.276,9.968,7.066,15.974,7.066c0.021,0,0.042,0,0.065,0 c5.983,0,11.722-2.739,15.949-6.977l57.436-57.958c4.284-4.294,6.653-10.135,6.572-16.201c-0.08-6.064-2.604-11.841-6.998-16.021 l-10.467-9.955c7.542-13.929,13.857-29.076,18.564-44.536h15.145c12.438,0,22.522-10.084,22.522-22.522V214.71 C511.249,202.272,501.165,192.188,488.727,192.188z M256,394.208c-77.135,0-139.887-62.752-139.887-139.887 c0-77.133,62.752-139.886,139.887-139.886s139.887,62.754,139.887,139.886C395.887,331.456,333.135,394.208,256,394.208z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="" />
+                  <feMerge>
+                    <feMergeNode in="" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {banana &&
+                workshops2.slice(0, 4).map((_, index) => {
+                  const centerX = 600;
+                  const centerY = 300;
+                  const stepX = 450;
+                  const stepY = 150 + index * 100;
+
+                  const controlX1 = centerX - 80;
+                  const controlY1 = centerY - 20;
+                  const controlX2 = stepX + 80;
+                  const controlY2 = stepY;
+
+                  return (
+                    <path
+                      key={index}
+                      d={`M ${centerX} ${centerY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${stepX} ${stepY}`}
+                      fill="none"
+                      stroke="#39ff14"
+                      strokeWidth="4"
+                      opacity={0.9}
+                      className={reversingRight ? "reverse-path" : "draw-path"}
+                      style={{
+                        animationDelay: `${index * 0.2}s`,
+                        animationPlayState:
+                          banana || reversingRight ? "running" : "paused",
+                      }}
+                    />
+                  );
+                })}
             </svg>
-            <div className="single-container">
-              {workshops2.map((workshop, index) => (
+
+            <div
+              className="w-24 h-24 bg-black rounded-full flex justify-center items-center text-white cursor-pointer transition-transform duration-300 z-10 center-icon border border-[rgba(26,255,0,0.727)] relative"
+              onClick={() => {
+                if (!banana) {
+                  setBanana(true);
+                  setReversingRight(false);
+                  setShowIconsRight(false);
+                  setIsFadingOutIconsRight(false);
+                  setTimeout(() => setShowIconsRight(true), 90);
+                } else {
+                  setIsFadingOutIconsRight(true);
+                  setShowIconsRight(false);
+                  setReversingRight(true);
+                  setTimeout(() => {
+                    setBanana(false);
+                    setReversingRight(false);
+                    setIsFadingOutIconsRight(false);
+                  }, 100);
+                }
+              }}
+              style={{
+                border: `4px solid rgba(26,255,0,0.727)`,
+                boxShadow: banana
+                  ? "0 0 20px rgba(26,255,0,0.5)"
+                  : "0 0 10px rgba(26,255,0,0.3)",
+              }}
+            >
+              <span className="text-center text-[2.5rem]">CS</span>
+            </div>
+
+            <div
+              className="single-container absolute left-[-50px] flex flex-col justify-center gap-14 transition-all duration-500"
+              style={{
+                top: "34%",
+                rotate: "-22.5deg",
+              }}
+            >
+              {workshops2.slice(0, 4).map((workshop, index) => (
                 <div
                   key={index}
-                  className="icon-container"
-                  onMouseEnter={() =>
-                    setHoveredContent({
-                      title: workshop.title,
-                      description: workshop.description,
-                      Icon: workshop.Icon,
-                      fullContent: workshop.fullContent,
-                    })
-                  }
-                  onMouseLeave={() =>
-                    setHoveredContent({
-                      title:
-                        selectedContent?.title ||
-                        "Why Choose IllusionSecurity.ai?",
-                      description:
-                        selectedContent?.description ||
-                        "It all started with a movie...",
-                      Icon: selectedContent?.Icon || Brain,
-                      fullContent:
-                        selectedContent?.fullContent ||
-                        `<p>As a school student, I sat in a dark room, eyes glued to the screen...</p>
-                  <p>That moment ignited something in me—a burning curiosity...</p>
-                  <ul>
-                    <li>Understanding security layers</li>
-                    <li>Breaking down complex systems</li>
-                  </ul>`,
-                    })
-                  }
-                  onClick={() =>
-                    setSelectedContent({
-                      title: workshop.title,
-                      description: workshop.description,
-                      Icon: workshop.Icon,
-                      fullContent: workshop.fullContent,
-                    })
-                  }
+                  className={`icon-container2 relative ${
+                    showIconsRight
+                      ? "fade-slide-in"
+                      : isFadingOutIconsRight
+                      ? "fade-slide-out"
+                      : "hidden-icon"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.2 + 1}s`,
+                    animationFillMode: "forwards",
+                  }}
+                  onClick={() => {
+                    setSelectedContent(workshop);
+                  }}
                 >
-                  {/* <span className="icon">{workshop.icon}</span> */}
-                  <workshop.Icon className="w-10 h-10 text-green-400 " />
+                  <div className="flex items-center gap-3 bg-black bg-opacity-80 px-4 py-2 cursor-pointer hover:bg-opacity-90 transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-transparent text-green-400 flex items-center justify-center">
+                      <workshop.Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-sm text-white font-medium">
+                      Step {index + 1}
+                    </span>
+                  </div>
                 </div>
               ))}
-              {/* Center Gear Icon */}
-              <div className="center-icon ">
-                <span>⚙️</span>
-              </div>
+            </div>
+          </div> */}
+          {/* Rotating Circle - right */}
+          <div className="circle-container top-0 right-[-410px] h-full w-[50vw] flex justify-center items-center overflow-hidden relative">
+            {/* Right Side SVG Paths (code remains the same) */}
+            <svg
+              className="svg-connect-r absolute inset-0 w-[1000px] h-[1200px]"
+              viewBox="0 0 1000 1000"
+            >
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="" />
+                  <feMerge>
+                    <feMergeNode in="" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {banana &&
+                workshops2.slice(0, 4).map((_, index) => {
+                  const centerX = 600;
+                  const centerY = 300;
+                  const stepX = 450;
+                  const stepY = 150 + index * 100;
+                  const controlX1 = centerX - 80;
+                  const controlY1 = centerY - 20;
+                  const controlX2 = stepX + 80;
+                  const controlY2 = stepY;
+
+                  return (
+                    <path
+                      key={index}
+                      d={`M ${centerX} ${centerY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${stepX} ${stepY}`}
+                      fill="none"
+                      stroke="#39ff14"
+                      strokeWidth="4"
+                      opacity={0.9}
+                      className={reversingRight ? "reverse-path" : "draw-path"}
+                      style={{
+                        animationDelay: `${index * 0.2}s`,
+                        animationPlayState:
+                          banana || reversingRight ? "running" : "paused",
+                      }}
+                    />
+                  );
+                })}
+            </svg>
+
+            {/* Center Icon (code remains the same) */}
+            <div
+              className="w-24 h-24 bg-black rounded-full flex justify-center items-center text-white cursor-pointer transition-transform duration-300 z-10 center-icon border border-[rgba(26,255,0,0.727)] relative"
+              onClick={() => {
+                if (!banana) {
+                  setBanana(true);
+                  setReversingRight(false);
+                  setShowIconsRight(false);
+                  setIsFadingOutIconsRight(false);
+                  setTimeout(() => setShowIconsRight(true), 90);
+                } else {
+                  setIsFadingOutIconsRight(true);
+                  setShowIconsRight(false);
+                  setReversingRight(true);
+                  setTimeout(() => {
+                    setBanana(false);
+                    setReversingRight(false);
+                    setIsFadingOutIconsRight(false);
+                  }, 100);
+                }
+              }}
+              style={{
+                border: `4px solid rgba(26,255,0,0.727)`,
+                boxShadow: banana
+                  ? "0 0 20px rgba(26,255,0,0.5)"
+                  : "0 0 10px rgba(26,255,0,0.3)",
+              }}
+            >
+              <span className="text-center text-[2.5rem]">CS</span>
+            </div>
+
+            {/* Right Icons (code remains the same) */}
+            <div
+              className="single-container absolute left-[-50px] flex flex-col justify-center gap-14 transition-all duration-500"
+              style={{
+                top: "34%",
+                rotate: "-22.5deg",
+              }}
+            >
+              {workshops2.slice(0, 4).map((workshop, index) => (
+                <div
+                  key={index}
+                  className={`icon-container2 relative ${
+                    showIconsRight
+                      ? "fade-slide-in"
+                      : isFadingOutIconsRight
+                      ? "fade-slide-out"
+                      : "hidden-icon"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.2 + 1}s`,
+                    animationFillMode: "forwards",
+                  }}
+                  onClick={() => {
+                    setSelectedContent(workshop);
+                  }}
+                >
+                  <div className="flex items-center gap-3 bg-black bg-opacity-80 px-4 py-2 cursor-pointer hover:bg-opacity-90 transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-transparent text-green-400 flex items-center justify-center">
+                      <workshop.Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-sm text-white font-medium">
+                      Step {index + 1}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* --- 1. ADDED TERMINAL WINDOW FOR THE RIGHT SIDE --- */}
+            <div
+              className={`absolute transition-all duration-500 ease-in-out ${
+                banana // <-- Visibility is controlled by the 'banana' state
+                  ? "opacity-0 filter blur-md pointer-events-none"
+                  : "opacity-100 filter-none"
+              }`}
+              style={{
+                // Positioned to match the 'Right Icons' container
+                left: "-155px",
+                top: "34%",
+                rotate: "-22.5deg",
+              }}
+            >
+              <TerminalWindow title="Cybersecurity Ops" script={script2} />
             </div>
           </div>
 
@@ -1673,10 +1288,9 @@ const SemiGearPage = () => {
                 <p className="text-gray-300 text-sm md:text-lg">
                   {modalContent.description}
                 </p>
-                <div
-                  className=" text-gray-300 max-h-[60vh] text-sm md:text-lg"
-                  dangerouslySetInnerHTML={{ __html: modalContent.fullContent }}
-                />
+                <div className="text-gray-300 max-h-[60vh] text-sm md:text-lg">
+                  {modalContent.fullContent}
+                </div>
               </div>
             </div>
           )}

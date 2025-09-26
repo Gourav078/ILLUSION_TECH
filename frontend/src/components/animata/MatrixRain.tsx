@@ -15,11 +15,11 @@ const MatrixRain = () => {
     canvas.height = window.innerHeight;
 
     // Configurations
-    const fontSize = 20;
+    const fontSize = 10;
     const color = "#00FF98";
     const background = "rgba(0, 0, 0, 0.05)";
     const speed = 50;
-    const charSet = "01".split("");
+    const charSet = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
     const columns = Math.floor(canvas.width / fontSize);
     const rows = Math.floor(canvas.height / fontSize);
