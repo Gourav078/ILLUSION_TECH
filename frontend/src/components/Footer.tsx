@@ -56,13 +56,13 @@ const Footer = () => {
                       href="https://github.com/illusionsecurity"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:scale-110 transition-transform text-cyber-accent hover:text-white text-[#646464]"
+                      className="hover:scale-110 transition-transform hover:text-green-400 text-[#646464]"
                     >
                       <Github className="w-6 h-6 sm:w-6 sm:h-6" />
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Github</p>
+                    <p className="text-green-400">Github</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -79,7 +79,7 @@ const Footer = () => {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Linkedin</p>
+                    <p className="text-green-400">Linkedin</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -87,7 +87,7 @@ const Footer = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
-                      href="https://twitter.com/illusionsec"
+                      href="https://twitter.com/illusionsecurity"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:scale-110 transition-transform text-cyber-accent hover:text-white text-[#646464]"
@@ -96,7 +96,7 @@ const Footer = () => {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Twitter</p>
+                    <p className="text-green-400">Twitter</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

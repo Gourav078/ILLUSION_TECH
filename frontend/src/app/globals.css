@@ -153,22 +153,16 @@ body {
   height: 600px;
   border-radius: 50%;
   background: transparent;
-  /* animation: rotate 20s linear infinite; */
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
   transform-origin: center;
-  transform: rotate(22deg);
 }
 
 .circle-container.paused {
   animation-play-state: paused;
 }
-
-/* .circle-container:active {
-  cursor: grabbing;
-} */
 
 .single-container {
   position: absolute;
@@ -192,7 +186,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: #374151; */
   border-radius: 50%;
   font-size: 2.5rem;
   color: #4ade80;
@@ -244,8 +237,6 @@ body {
 
 .icon-container2:hover {
   box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.5);
-  /* background-color: #37ff14c5; */
-  /* box-shadow: 0 0 15px #39ff14; */
 }
 
 .icon-container2 {
@@ -349,7 +340,7 @@ body {
 
 .step-tooltip {
   @apply absolute -top-8 left-1/2 -translate-x-1/2 text-white text-sm font-semibold px-3 py-1 rounded-md;
-  background: #000;
+  background: #ffffff;
   border: 2px solid #39ff14;
   box-shadow: 0 0 10px #39ff14;
   z-index: 20;
@@ -368,7 +359,7 @@ body {
   transform: translateX(-50%) rotate(45deg);
   width: 10px;
   height: 10px;
-  background: #000;
+  background: #fffcfc;
   border-top: none;
   border-left: none;
   border-right: 2px solid #39ff14;
@@ -438,12 +429,9 @@ body {
 }
 
 /* NEW UI */
-/* Optional: for smoother entrance/exit animation */
 .transition-all {
   transition: all 0.3s ease-in-out;
 }
-
-/* someting */
 
 .title-description {
   position: absolute;
@@ -535,7 +523,7 @@ body {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background: cyan;
+  background: rgba(0, 255, 255, 0.642);
   color: black;
   border: none;
   padding: 5px 8px;
@@ -548,7 +536,7 @@ body {
   position: absolute;
   bottom: 5px;
   left: 5px;
-  background: cyan;
+  background: rgba(0, 255, 255, 0.642);
   color: black;
   border: none;
   padding: 5px 8px;
@@ -566,70 +554,78 @@ body {
 }
 
 /* Modal Styles */
+
+/* This class is added to the <body> via JavaScript when the modal is open */
+html.modal-open,
+body.modal-open {
+  overflow: hidden;
+}
+
+/* The rest of your styles remain the same */
+body.modal-open > #__next > *:not(.modal-overlay) {
+  filter: blur(5px);
+  pointer-events: none;
+  transition: filter 0.3s ease-out;
+}
+
+/* The full-screen, transparent modal container */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
+/* The content area that holds your component */
 .modal-content {
-  background: black;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  color: cyan;
-  font-family: "Major Mono Display", monospace;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  padding: 0;
+  overflow-y: auto; /* Allows scrolling inside the modal */
 }
 
-/* Modal Window */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 90%;
-    height: auto;
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal-content {
-    width: 95%;
-    height: auto;
-    padding: 10px;
-  }
-}
-
+/* A floating close button */
 .close-button {
-  background: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  font-size: 14px;
+  position: fixed; /* Fixed to the viewport corner */
+  top: 90%;
+  right: 20px;
+  background: rgba(255, 68, 68, 0.5);
+  color: rgb(17, 255, 0);
+  border: 1px solid rgba(255, 9, 9, 0.7);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   cursor: pointer;
-  margin-top: 10px;
+  z-index: 1010; /* Ensures it's on top of everything */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.close-button:hover {
+  background: rgba(255, 0, 0, 0.8);
+  transform: scale(1.1);
 }
 
 .screen-text {
-  /* font-size: 15px; */
   font-size: calc(2px + 0.8vw);
   font-family: "Major Mono Display", monospace;
-
   fill: rgba(0, 255, 170, 0.9);
-  /* fill: black; */
   text-anchor: middle;
   dominant-baseline: middle;
-  /* filter: blur(0.1px); */
-  /* letter-spacing: 1px; */
 }
 
 .main-font-family {
-  /* font-family: "Anonymous Pro", monospace; */
-  font-family: "Major Mono Display", monospace;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 #computer,
@@ -743,7 +739,6 @@ body {
 
 /* Cyberpunk Background */
 .cyberpunk-bg {
-  /* background: linear-gradient(to right, #0a0f1e, #1b1f3a); */
   color: #ffffff;
 }
 
@@ -766,7 +761,6 @@ body {
 }
 
 .terminal-popup {
-  /* box-shadow: 0px 0px 15px 3px rgba(0, 234, 255, 0.8);*/
   box-shadow: 0px -1px 20px 0px rgb(74, 222, 128);
   border-image: linear-gradient(145deg, #44d480cc, #42eb93) 1;
   animation: flicker 2s infinite alternate;
@@ -858,7 +852,6 @@ body {
 
 /* Card Styles */
 .neon-glow {
-  /* background: rgba(15, 15, 40, 0.9); */
   box-shadow: 0px 0px 15px 3px rgba(0, 234, 255, 0.8);
   border: 2px solid rgba(130, 130, 130, 0.8);
 }
@@ -882,23 +875,17 @@ body {
 }
 
 .hover-effect:hover {
-  /* transform: translateZ(-15px) scale(1.1) !important; */
   background: rgba(30, 68, 71, 0.797);
 }
 
 /* ... (Existing CSS) */
 
 .expanded-card {
-  /* Styles for the expanded card */
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out,
     filter 0.5s ease-in-out, z-index 0.5s ease-in-out; /* Add transition */
   opacity: 1; /* Make sure it's visible */
   filter: none; /* Remove blur */
-  /* transform: scale(2) translateZ(0);  Moved to inline style for dynamic scaling */
-  /* z-index: 20; Moved to inline style for dynamic z-index */
 }
-
-/* ... (Rest of CSS) */
 
 /* HOME ANIMATE BACKGROUND */
 .hide {
@@ -966,7 +953,6 @@ body {
 }
 
 /* ROAD MAP FLIP ANIMATION */
-/* Add this in your global CSS or as Tailwind plugin */
 .rotate-icon {
   transition: transform 0.4s ease;
 }

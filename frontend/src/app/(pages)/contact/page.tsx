@@ -1,6 +1,5 @@
 "use client";
 import MatrixRain from "@/components/animata/MatrixRain";
-import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { toast, Toaster } from "sonner";
 
@@ -16,6 +15,8 @@ const Contact = () => {
   const [output, setOutput] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
 
+  const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL2;
+
   const steps = [
     "To start, could you give us your email",
     "Awesome! And what's your name?",
@@ -25,27 +26,27 @@ const Contact = () => {
   ];
 
   const subSteps = [
-    "your email : ",
-    "your name? : ",
-    "phone number? : ",
-    "write your query : ",
+    "your email: ",
+    "your name?: ",
+    "phone number?: ",
+    "write your query: ",
     "Thank you! Your details have been submitted.",
   ];
 
   const checkmarkSVG = `<svg stroke='#6eebb7' fill='none' stroke-width='2' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path><polyline points='22 4 12 14.01 9 11.01'></polyline></svg>`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
-    if (step === 0) {
-      setFormData({ ...formData, email: input });
-    } else if (step === 1) {
-      setFormData({ ...formData, name: input });
-    } else if (step === 2) {
-      setFormData({ ...formData, phone: input });
-    } else if (step === 3) {
-      setFormData({ ...formData, message: input });
-    }
+    if (!input.trim()) return; // Don't proceed if input is empty
 
+    const newFormData = { ...formData };
+
+    if (step === 0) newFormData.email = input;
+    else if (step === 1) newFormData.name = input;
+    else if (step === 2) newFormData.phone = input;
+    else if (step === 3) newFormData.message = input;
+
+    setFormData(newFormData);
     setOutput((prev) => [
       ...prev,
       `${steps[step]}`,
@@ -63,43 +64,56 @@ const Contact = () => {
 
   useEffect(() => {
     if (step === 4) {
-      const submitForm = async () => {
+      const submitToGoogleSheet = async () => {
+        // Create a FormData object for submission
+        const submissionData = new FormData();
+        submissionData.append("formName", "contactForm"); // This tells our script which sheet to use
+        submissionData.append("name", formData.name);
+        submissionData.append("email", formData.email);
+        submissionData.append("phone", formData.phone);
+        submissionData.append("message", formData.message);
+
         try {
-          const response = await axios.post(
-            "http://localhost:8001/contacts/",
-            formData
-          );
-          console.log("Contact form submitted:", response.data);
-          toast.success(
-            "Message sent successfully! We'll get back to you soon."
-          );
-        } catch (err) {
+          if (!GOOGLE_SCRIPT_URL) {
+            throw new Error("Google Script URL is not defined.");
+          }
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: submissionData,
+          });
+
+          if (response.ok || response.type === "opaque") {
+            toast.success("Message sent! We'll get back to you soon.");
+          } else {
+            throw new Error("Submission failed. Please try again.");
+          }
+        } catch (err: unknown) {
           console.error("Error submitting contact form:", err);
-          toast.error("Failed to send message. Please try again later.");
+          if (err instanceof Error) {
+            toast.error(err.message);
+          } else {
+            toast.error("An unknown error occurred.");
+          }
         } finally {
+          // Reset the form after a delay
           setTimeout(() => {
             setStep(0);
-            setFormData({
-              name: "",
-              email: "",
-              phone: "",
-              message: "",
-            });
+            setFormData({ name: "", email: "", phone: "", message: "" });
             setOutput([]);
-          }, 3000);
+          }, 4000);
         }
       };
-      submitForm();
+      submitToGoogleSheet();
     }
   }, [step, formData]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-transparent main-font-family p-4">
-      <div className="absolute inset-0 z-[-1] blur-sm w-full h-full min-h-screen">
+      <Toaster position="top-right" richColors />
+      <div className="absolute inset-0 z-[-1] blur-sm">
         <MatrixRain />
       </div>
-      <Toaster position="top-right" />
-      <div className="bg-transparant top-10 border-t-2 border-gray-400 rounded-lg shadow-lg w-full max-w-4xl mx-4 relative p-6 backdrop-blur-md border border-opacity-100">
+      <div className="bg-transparent top-10 border-t-2 border-gray-400 rounded-lg shadow-lg w-full max-w-4xl mx-4 relative p-6 backdrop-blur-md border border-opacity-100">
         <div className="absolute top-1 left-2 flex gap-2">
           <div className="w-3 h-3 bg-red-500 rounded-full"></div>
           <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -107,7 +121,7 @@ const Contact = () => {
         </div>
 
         <div className="absolute -top-0 left-1/2 transform -translate-x-1/2 text-[0.6rem] sm:text-[0.7rem] md:text-sm text-gray-400">
-          illusion@tech.dev
+          office@illusionsecurity.tech
         </div>
 
         <div
@@ -127,7 +141,7 @@ const Contact = () => {
           ))}
           {step < 4 && (
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleNextStep}
               className="flex flex-col items-start mt-4 text-xs sm:text-sm"
             >
               <div className="flex items-center gap-2">
@@ -142,12 +156,13 @@ const Contact = () => {
                   {subSteps[step]}
                 </span>
                 <input
-                  type="text"
+                  type={step === 0 ? "email" : "text"} // Basic email validation
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   className="bg-transparent border-none text-white w-full text-xs sm:text-sm focus:outline-none"
                   style={{ caretShape: "block" }}
                   autoFocus
+                  required
                 />
               </div>
             </form>

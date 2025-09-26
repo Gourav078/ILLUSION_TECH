@@ -2,11 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useIntro } from "../components/animata/IntroContext";
+import Image from "next/image";
 
 const Header = () => {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
+
+  const { isIntroEnded } = useIntro();
+
+  if (!isIntroEnded) return null;
 
   return (
     <>
@@ -17,7 +23,13 @@ const Header = () => {
             href="/"
             className="w-auto h-auto text-[1.1rem] font-extrabold text-green-400"
           >
-            ILLUSIONSECURITY.AI
+            <Image
+              src="/logo.png" // The path to your image inside the 'public' folder
+              alt="A descriptive caption for the image"
+              width={250} // Desired width in pixels
+              height={50} // Desired height in pixels
+              priority // Optional: if you want to prioritize loading this image
+            />
           </Link>
 
           <div className="hidden lg:flex items-center gap-12">

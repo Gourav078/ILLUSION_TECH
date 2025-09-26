@@ -14,7 +14,7 @@ interface GlitchProps {
 const GlitchText: React.FC<GlitchProps> = ({
   text,
   glitchDuration = 2000,
-  letterChangeInterval = 150,
+  letterChangeInterval = 100,
   pauseBetweenGlitches = 10000,
   glitchDelay = 10000,
 }) => {
